@@ -8,4 +8,10 @@
     <PackageReference Include="Unity" Version="5.11.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Implementations\Interface\" />
+    <Folder Include="Implementations\Method\" />
+    <Folder Include="Implementations\Property\" />
+  </ItemGroup>
+
 </Project>
