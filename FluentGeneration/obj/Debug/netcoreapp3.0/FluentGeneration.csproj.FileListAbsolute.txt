@@ -1,0 +1,5 @@
+D:\Projects\Libraries\FluentGeneration\FluentGeneration\bin\Debug\netcoreapp3.0\FluentGeneration.deps.json
+D:\Projects\Libraries\FluentGeneration\FluentGeneration\bin\Debug\netcoreapp3.0\FluentGeneration.dll
+D:\Projects\Libraries\FluentGeneration\FluentGeneration\obj\Debug\netcoreapp3.0\FluentGeneration.csprojAssemblyReference.cache
+D:\Projects\Libraries\FluentGeneration\FluentGeneration\obj\Debug\netcoreapp3.0\FluentGeneration.AssemblyInfoInputs.cache
+D:\Projects\Libraries\FluentGeneration\FluentGeneration\obj\Debug\netcoreapp3.0\FluentGeneration.AssemblyInfo.cs
