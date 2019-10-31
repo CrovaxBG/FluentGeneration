@@ -14,12 +14,6 @@ namespace FluentGeneration
 {{[IFieldAccessSpecifier<>]}} {{[IFieldAccessModifier<>]}} {{[IFieldType<>]}} {{[IFieldName<>]}} {{= [IFieldValue<>]}};";
     }
 
-    public static class Configuration
-    {
-        public static IDependencyResolver DependencyResolver { get; set; }
-        public static IPatternResolver PattenResolver { get; set; }
-    }
-
     public interface IDependencyResolver : IDisposable
     {
         T Resolve<T>();
@@ -44,7 +38,7 @@ namespace FluentGeneration
     {
         private readonly IUnityContainer _container;
 
-        private UnityResolver(IUnityContainer container)
+        public UnityResolver(IUnityContainer container)
         {
             _container = container;
         }

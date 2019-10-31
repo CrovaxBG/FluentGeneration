@@ -5,12 +5,103 @@ using System.Text.RegularExpressions;
 
 namespace FluentGeneration
 {
-    public interface IPatternContainer : IDisposable
+    public interface IPatternContainer : IPatternResolver, IDisposable
     {
         IPatternContainer RegisterType(Type registeredType, Type mappedToType);
         IPatternContainer RegisterType<TFrom, TTo>() where TTo : IGeneratableHandler;
         bool IsRegistered(Type type);
-        object Resolve(Type type);
+    }
+
+    public interface IPatternResolver
+    {
+        IGeneratableHandler Resolve(Type type);
+    }
+
+    public class PatternContainer : IPatternContainer
+    {
+        private bool _disposed;
+        private Dictionary<Type, Type> _patternMap;
+
+        public IPatternContainer RegisterType<TFrom, TTo>()
+            where TTo : IGeneratableHandler
+        {
+            return RegisterType(typeof(TFrom), typeof(TTo));
+        }
+
+        public IPatternContainer RegisterType(Type registeredType, Type mappedToType)
+        {
+            if (registeredType == null) { throw new ArgumentNullException(nameof(registeredType)); }
+            if (mappedToType == null) { throw new ArgumentNullException(nameof(mappedToType)); }
+
+            if (!typeof(IGeneratableHandler).IsAssignableFrom(mappedToType))
+            {
+                throw new InvalidOperationException(
+                    $"{nameof(mappedToType)} must inherit from {nameof(IGeneratableHandler)}!");
+            }
+
+            if (_patternMap.ContainsKey(registeredType))
+            {
+                throw new InvalidOperationException($"{nameof(registeredType)} is already registered!");
+            }
+
+            _patternMap.Add(registeredType, mappedToType);
+            return this;
+        }
+
+        public bool IsRegistered(Type type)
+        {
+            if (type == null) { throw new ArgumentNullException(nameof(type)); }
+
+            return _patternMap.ContainsKey(type);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                _patternMap = null;
+            }
+
+            _disposed = true;
+        }
+
+        public IGeneratableHandler Resolve(Type type)
+        {
+            if (type == null) { throw new ArgumentNullException(nameof(type)); }
+
+            if (!_patternMap.ContainsKey(type))
+            {
+                throw new InvalidOperationException($"{nameof(type)} is not registered!");
+            }
+
+            var targetType = _patternMap[type];
+            return (IGeneratableHandler) Activator.CreateInstance(targetType);
+        }
+    }
+
+    public class PatternResolver : IPatternResolver
+    {
+        private readonly IPatternContainer _container;
+
+        public PatternResolver(IPatternContainer container)
+        {
+            _container = container;
+        }
+
+        public IGeneratableHandler Resolve(Type type)
+        {
+            return _container.Resolve(type);
+        }
     }
 
     public class CodeGenerator : IGenerator
@@ -90,98 +181,6 @@ namespace FluentGeneration
             }
 
             GenerationData.Add(type, data);
-        }
-    }
-
-    public class PatternContainer : IPatternContainer
-    {
-        private bool _disposed = false;
-        private Dictionary<Type, Type> _patternMap;
-
-        public IPatternContainer RegisterType<TFrom, TTo>()
-            where TTo : IGeneratableHandler
-        {
-            return RegisterType(typeof(TFrom), typeof(TTo));
-        }
-
-        public IPatternContainer RegisterType(Type registeredType, Type mappedToType)
-        {
-            if (registeredType == null) { throw new ArgumentNullException(nameof(registeredType)); }
-            if (mappedToType == null) { throw new ArgumentNullException(nameof(mappedToType)); }
-
-            if (!typeof(IGeneratableHandler).IsAssignableFrom(mappedToType))
-            {
-                throw new InvalidOperationException(
-                    $"{nameof(mappedToType)} must inherit from {nameof(IGeneratableHandler)}!");
-            }
-
-            if (_patternMap.ContainsKey(registeredType))
-            {
-                throw new InvalidOperationException($"{nameof(registeredType)} is already registered!");
-            }
-
-            _patternMap.Add(registeredType, mappedToType);
-            return this;
-        }
-
-        public bool IsRegistered(Type type)
-        {
-            if (type == null) { throw new ArgumentNullException(nameof(type)); }
-
-            return _patternMap.ContainsKey(type);
-        }
-
-        public object Resolve(Type type)
-        {
-            if (type == null) { throw new ArgumentNullException(nameof(type)); }
-
-            if (!_patternMap.ContainsKey(type))
-            {
-                throw new InvalidOperationException($"{nameof(type)} is not registered!");
-            }
-
-            var targetType = _patternMap[type];
-            return Activator.CreateInstance(targetType);
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                _patternMap = null;
-            }
-
-            _disposed = true;
-        }
-    }
-
-    public interface IPatternResolver
-    {
-        IGeneratableHandler Resolve(Type type);
-    }
-
-    public class PatternResolver : IPatternResolver
-    {
-        private readonly IPatternContainer _container;
-
-        public PatternResolver(IPatternContainer container)
-        {
-            _container = container;
-        }
-
-        public IGeneratableHandler Resolve(Type type)
-        {
-            return (IGeneratableHandler)_container.Resolve(type);
         }
     }
 }
