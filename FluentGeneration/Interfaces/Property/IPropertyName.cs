@@ -1,6 +1,9 @@
-﻿namespace FluentGeneration.Interfaces.Property
+﻿using FluentGeneration.Shared;
+
+namespace FluentGeneration.Interfaces.Property
 {
-    public interface IPropertyName<out T>
+    public interface IPropertyName<T> : IFluentLink<T>
+        where T : IGeneratedObject
     {
         IPropertyAttribute<T> WithName(string name);
     }

@@ -2,10 +2,10 @@
 
 namespace FluentGeneration.Interfaces.Property
 {
-    public interface IProperty<out T> : IGeneratedObject, IEndable<T>,
-        IPropertyAccessSpecifier<IProperty<T>>, IPropertyAccessModifier<IProperty<T>>,
-        IPropertyType<IProperty<T>>, IPropertyName<IProperty<T>>, IPropertyAttribute<IProperty<T>>,
-        IGetBody<IProperty<T>>, ISetBody<IProperty<T>>, IPropertyValue<IProperty<T>>
+    public interface IProperty<T> :
+        IGeneratedObject, IFluentLink<T>,
+        IBeginable<IPropertyAccessSpecifier<IProperty<T>>>, IEndable<T>
+        where T : IGeneratedObject
     {
 
     }

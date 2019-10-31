@@ -1,19 +1,17 @@
-﻿using System;
+﻿using Unity;
+using Unity.Lifetime;
+using FluentGeneration.Shared;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using FluentGeneration.Containers;
 using FluentGeneration.Factories;
+using FluentGeneration.Resolvers;
+using FluentGeneration.Containers;
 using FluentGeneration.Generators;
-using FluentGeneration.Implementations.Class;
-using FluentGeneration.Implementations.Field;
 using FluentGeneration.Interfaces.Class;
 using FluentGeneration.Interfaces.Field;
+using System.ComponentModel.DataAnnotations;
+using FluentGeneration.Implementations.Class;
+using FluentGeneration.Implementations.Field;
 using FluentGeneration.Interfaces.Interface;
-using FluentGeneration.Resolvers;
-using FluentGeneration.Shared;
-using Unity;
-using Unity.Lifetime;
 
 namespace FluentGeneration
 {

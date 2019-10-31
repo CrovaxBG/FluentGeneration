@@ -2,7 +2,8 @@
 
 namespace FluentGeneration.Interfaces.Property
 {
-    public interface IPropertyAccessModifier<out T>
+    public interface IPropertyAccessModifier<T> : IFluentLink<T>
+        where T : IGeneratedObject
     {
         IPropertyType<T> WithAccessModifier(AccessModifiers accessModifier);
     }

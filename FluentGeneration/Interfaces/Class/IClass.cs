@@ -2,7 +2,7 @@
 
 namespace FluentGeneration.Interfaces.Class
 {
-    public interface IClass : IStorageContainer<IClass>, IFluentContainer<IClass>, IGeneratedObject
+    public interface IClass : IFluentContainer<IClass>, IGeneratedObject
     {
         void Build();
     }

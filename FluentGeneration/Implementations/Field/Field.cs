@@ -6,7 +6,7 @@ using FluentGeneration.Shared;
 namespace FluentGeneration.Implementations.Field
 {
     public class Field<T> : IField<T>
-        where T : IStorageContainer<T>, IGeneratedObject
+        where T : IGeneratedObject
     {
         public IGenerator Generator { get; }
         public string Data { get; private set; }

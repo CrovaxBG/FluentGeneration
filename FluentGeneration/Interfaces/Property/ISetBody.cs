@@ -1,6 +1,9 @@
-﻿namespace FluentGeneration.Interfaces.Property
+﻿using FluentGeneration.Shared;
+
+namespace FluentGeneration.Interfaces.Property
 {
-    public interface ISetBody<out T>
+    public interface ISetBody<T> : IFluentLink<T>
+        where T : IGeneratedObject
     {
         IPropertyValue<T> AutoSet();
         IPropertyValue<T> WithSetBody(string body);

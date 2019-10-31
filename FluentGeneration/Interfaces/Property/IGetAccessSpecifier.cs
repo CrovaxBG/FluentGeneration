@@ -2,7 +2,8 @@
 
 namespace FluentGeneration.Interfaces.Property
 {
-    public interface IGetAccessSpecifier<out T>
+    public interface IGetAccessSpecifier<T> : IFluentLink<T>
+        where T : IGeneratedObject
     {
         IGetBody<T> WithGetAccessSpecifier(AccessSpecifier accessSpecifier);
     }
