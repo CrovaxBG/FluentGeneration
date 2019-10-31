@@ -6,9 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="FluentGeneration">
-      <HintPath>..\FluentGeneration\bin\Release\netcoreapp3.0\FluentGeneration.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\FluentGeneration\FluentGeneration.csproj" />
   </ItemGroup>
 
 </Project>

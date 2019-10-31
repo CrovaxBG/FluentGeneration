@@ -1,0 +1,16 @@
+D:\Projects\Libraries\FluentGeneration\FluentGenerationExecutable\obj\Debug\netcoreapp3.0\FluentGenerationExecutable.csprojAssemblyReference.cache
+D:\Projects\Libraries\FluentGeneration\FluentGenerationExecutable\obj\Debug\netcoreapp3.0\FluentGenerationExecutable.AssemblyInfoInputs.cache
+D:\Projects\Libraries\FluentGeneration\FluentGenerationExecutable\obj\Debug\netcoreapp3.0\FluentGenerationExecutable.AssemblyInfo.cs
+D:\Projects\Libraries\FluentGeneration\FluentGenerationExecutable\bin\Debug\netcoreapp3.0\FluentGenerationExecutable.exe
+D:\Projects\Libraries\FluentGeneration\FluentGenerationExecutable\bin\Debug\netcoreapp3.0\FluentGenerationExecutable.deps.json
+D:\Projects\Libraries\FluentGeneration\FluentGenerationExecutable\bin\Debug\netcoreapp3.0\FluentGenerationExecutable.runtimeconfig.json
+D:\Projects\Libraries\FluentGeneration\FluentGenerationExecutable\bin\Debug\netcoreapp3.0\FluentGenerationExecutable.runtimeconfig.dev.json
+D:\Projects\Libraries\FluentGeneration\FluentGenerationExecutable\bin\Debug\netcoreapp3.0\FluentGenerationExecutable.dll
+D:\Projects\Libraries\FluentGeneration\FluentGenerationExecutable\bin\Debug\netcoreapp3.0\FluentGenerationExecutable.pdb
+D:\Projects\Libraries\FluentGeneration\FluentGenerationExecutable\bin\Debug\netcoreapp3.0\Unity.Abstractions.dll
+D:\Projects\Libraries\FluentGeneration\FluentGenerationExecutable\bin\Debug\netcoreapp3.0\Unity.Container.dll
+D:\Projects\Libraries\FluentGeneration\FluentGenerationExecutable\bin\Debug\netcoreapp3.0\FluentGeneration.dll
+D:\Projects\Libraries\FluentGeneration\FluentGenerationExecutable\bin\Debug\netcoreapp3.0\FluentGeneration.pdb
+D:\Projects\Libraries\FluentGeneration\FluentGenerationExecutable\obj\Debug\netcoreapp3.0\FluentGenerationExecutable.csproj.CopyComplete
+D:\Projects\Libraries\FluentGeneration\FluentGenerationExecutable\obj\Debug\netcoreapp3.0\FluentGenerationExecutable.dll
+D:\Projects\Libraries\FluentGeneration\FluentGenerationExecutable\obj\Debug\netcoreapp3.0\FluentGenerationExecutable.pdb

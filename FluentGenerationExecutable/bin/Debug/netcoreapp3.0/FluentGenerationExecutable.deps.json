@@ -6,12 +6,12 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v3.0": {
-      "FluentGeneration/1.0.0": {
+      "FluentGenerationExecutable/1.0.0": {
         "dependencies": {
-          "Unity": "5.11.1"
+          "FluentGeneration": "1.0.0"
         },
         "runtime": {
-          "FluentGeneration.dll": {}
+          "FluentGenerationExecutable.dll": {}
         }
       },
       "System.Runtime.CompilerServices.Unsafe/4.5.2": {},
@@ -29,11 +29,19 @@
             "fileVersion": "5.11.1.0"
           }
         }
+      },
+      "FluentGeneration/1.0.0": {
+        "dependencies": {
+          "Unity": "5.11.1"
+        },
+        "runtime": {
+          "FluentGeneration.dll": {}
+        }
       }
     }
   },
   "libraries": {
-    "FluentGeneration/1.0.0": {
+    "FluentGenerationExecutable/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -51,6 +59,11 @@
       "sha512": "sha512-4LroMtZWLwc2krUsH8IX62fxNoOKb1463wHdtu617iVAOkMaFZ4e4kp6VR7tBi20jxvezlRbknWoeCXWg903yg==",
       "path": "unity/5.11.1",
       "hashPath": "unity.5.11.1.nupkg.sha512"
+    },
+    "FluentGeneration/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }
