@@ -1,10 +1,10 @@
 ﻿using System;
-using FluentGeneration.Interfaces.Field;
+using FluentGeneration.Interfaces.Property;
 using FluentGeneration.Shared;
 
-namespace FluentGeneration.Implementations.Field
+namespace FluentGeneration.Implementations.Property
 {
-    public class FieldValue<T> : IFieldValue<T>
+    public class PropertyValue<T> : IPropertyValue<T>
         where T : IGeneratedObject
     {
         public Func<T> Source { get; set; }
@@ -14,10 +14,10 @@ namespace FluentGeneration.Implementations.Field
             return Source.Invoke();
         }
 
-        public T WithValue(object value)
+        public T WithPropertyValue(string value)
         {
             var source = Source.Invoke();
-            source.Generator.AddGenerationData(typeof(IFieldValue<>), value);
+            source.Generator.AddGenerationData(typeof(IPropertyValue<>), value);
             return source;
         }
     }

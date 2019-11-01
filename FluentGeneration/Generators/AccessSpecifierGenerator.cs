@@ -18,7 +18,7 @@ namespace FluentGeneration.Generators
 
         public string Generate(GenerationData data)
         {
-            var accessSpecifier = (AccessSpecifier)data.Data;
+            var accessSpecifier = (AccessSpecifier) data.Data;
             return SpecifiersMap[accessSpecifier];
         }
     }

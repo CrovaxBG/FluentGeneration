@@ -1,35 +1,35 @@
 ﻿using System;
 using FluentGeneration.Generators;
-using FluentGeneration.Interfaces.Field;
+using FluentGeneration.Interfaces.Property;
 using FluentGeneration.Shared;
 
-namespace FluentGeneration.Implementations.Field
+namespace FluentGeneration.Implementations.Property
 {
-    public class Field<T> : IField<T>
+    public class Property<T> : IProperty<T>
         where T : IGeneratedObject
     {
         public IGenerator Generator { get; }
         public string Data { get; private set; }
         public Func<T> Source { get; set; }
 
-        private readonly IFieldAccessSpecifier<IField<T>> _accessSpecifier;
+        private readonly IPropertyAccessSpecifier<IProperty<T>> _accessSpecifier;
 
-        public Field(IGenerator generator, IFieldAccessSpecifier<IField<T>> accessSpecifier)
+        public Property(IGenerator generator, IPropertyAccessSpecifier<IProperty<T>> accessSpecifier)
         {
             Generator = generator;
             _accessSpecifier = accessSpecifier;
             _accessSpecifier.Source = () => this;
         }
 
-        public IFieldAccessSpecifier<IField<T>> Begin()
+        public IPropertyAccessSpecifier<IProperty<T>> Begin()
         {
             return _accessSpecifier;
         }
 
         public T End()
         {
-            Data = Generator.Generate(PatternConfig.FieldPattern);
-            Source.Invoke().Generator.AddGenerationData(typeof(IField<>), Data);
+            Data = Generator.Generate(PatternConfig.PropertyPattern);
+            Source.Invoke().Generator.AddGenerationData(typeof(IProperty<>), Data);
             Console.WriteLine(Data);
             return Source.Invoke();
         }

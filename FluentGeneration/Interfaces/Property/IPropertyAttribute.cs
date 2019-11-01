@@ -6,6 +6,6 @@ namespace FluentGeneration.Interfaces.Property
     public interface IPropertyAttribute<T> : IFluentLink<T>
         where T : IGeneratedObject
     {
-        IGetAccessSpecifier<T> WithAttributes(params Type[] attributeType);
+        IGetAccessSpecifier<T> WithAttributes(params Type[] attributeTypes);
     }
 }

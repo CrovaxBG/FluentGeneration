@@ -11,7 +11,9 @@ using FluentGeneration.Interfaces.Field;
 using System.ComponentModel.DataAnnotations;
 using FluentGeneration.Implementations.Class;
 using FluentGeneration.Implementations.Field;
+using FluentGeneration.Implementations.Property;
 using FluentGeneration.Interfaces.Interface;
+using FluentGeneration.Interfaces.Property;
 
 namespace FluentGeneration
 {
@@ -57,6 +59,7 @@ namespace FluentGeneration
             container.RegisterType(typeof(IFactory<>), typeof(AbstractFactory<>));
             container.RegisterType(typeof(IFactory<IGeneratableHandler>), typeof(PatternFactory));
             container.RegisterType(typeof(IGenerator), typeof(CodeGenerator));
+
             container.RegisterType(typeof(IFieldAccessSpecifier<>), typeof(FieldAccessSpecifier<>));
             container.RegisterType(typeof(IFieldAccessModifier<>), typeof(FieldAccessModifier<>));
             container.RegisterType(typeof(IFieldType<>), typeof(FieldType<>));
@@ -64,6 +67,19 @@ namespace FluentGeneration
             container.RegisterType(typeof(IFieldAttribute<>), typeof(FieldAttribute<>));
             container.RegisterType(typeof(IFieldValue<>), typeof(FieldValue<>));
             container.RegisterType(typeof(IField<>), typeof(Field<>));
+
+            container.RegisterType(typeof(IPropertyAccessSpecifier<>), typeof(PropertyAccessSpecifier<>));
+            container.RegisterType(typeof(IPropertyAccessModifier<>), typeof(PropertyAccessModifier<>));
+            container.RegisterType(typeof(IPropertyType<>), typeof(PropertyType<>));
+            container.RegisterType(typeof(IPropertyName<>), typeof(PropertyName<>));
+            container.RegisterType(typeof(IPropertyAttribute<>), typeof(PropertyAttribute<>));
+            container.RegisterType(typeof(IGetAccessSpecifier<>), typeof(GetAccessSpecifier<>));
+            container.RegisterType(typeof(IGetBody<>), typeof(GetBody<>));
+            container.RegisterType(typeof(ISetAccessSpecifier<>), typeof(SetAccessSpecifier<>));
+            container.RegisterType(typeof(ISetBody<>), typeof(SetBody<>));
+            container.RegisterType(typeof(IPropertyValue<>), typeof(PropertyValue<>));
+            container.RegisterType(typeof(IProperty<>), typeof(Property<>));
+
             container.RegisterType(typeof(IClass), typeof(Class));
 
             return container;
@@ -79,6 +95,17 @@ namespace FluentGeneration
             container.RegisterType(typeof(IFieldAttribute<>), typeof(AttributeGenerator));
             container.RegisterType(typeof(IFieldValue<>), typeof(ValueGenerator));
 
+            container.RegisterType(typeof(IPropertyAccessSpecifier<>), typeof(AccessSpecifierGenerator));
+            container.RegisterType(typeof(IPropertyAccessModifier<>), typeof(AccessModifierGenerator));
+            container.RegisterType(typeof(IPropertyType<>), typeof(TypeGenerator));
+            container.RegisterType(typeof(IPropertyName<>), typeof(NameGenerator));
+            container.RegisterType(typeof(IPropertyAttribute<>), typeof(AttributeGenerator));
+            container.RegisterType(typeof(IPropertyValue<>), typeof(ValueGenerator));
+            container.RegisterType(typeof(IGetAccessSpecifier<>), typeof(AccessSpecifierGenerator));
+            container.RegisterType(typeof(ISetAccessSpecifier<>), typeof(AccessSpecifierGenerator));
+            container.RegisterType(typeof(IGetBody<>), typeof(GetBodyGenerator));
+            container.RegisterType(typeof(ISetBody<>), typeof(SetBodyGenerator));
+
             return container;
         }
 
@@ -91,29 +118,7 @@ namespace FluentGeneration
 
         public IClass DefineClass()
         {
-            IClass generatedClass = _dependencyResolver.Resolve<IClass>();
-            generatedClass
-                .WithField()
-                    .Begin()
-                        .WithAccessSpecifier(AccessSpecifier.Private).WithAccessModifier(AccessModifiers.Static | AccessModifiers.Readonly)
-                        .WithType(typeof(List<string>)).WithName("_count").WithAttributes(typeof(RequiredAttribute), typeof(DisplayAttribute))
-                        .WithNoValue()
-                    .End()
-                //.WithProperty()
-                //    .WithAccessSpecifier(AccessSpecifier.Public).WithAccessModifier(AccessModifiers.None)
-                //    .WithType(typeof(string)).WithName("Count").WithAttributes(typeof(RequiredAttribute))
-                //    .WithGetAccessSpecifier(AccessSpecifier.None).WithGetBody("qweqwe")
-                //    .WithSetAccessSpecifier(AccessSpecifier.None).WithSetBody("qwewqe")
-                //    .WithPropertyValue(null)
-                //    .Build()
-                //.WithMethod()
-                //    .WithAccessSpecifier(AccessSpecifier.Public).WithAccessModifier(AccessModifiers.None)
-                //    .WithType(typeof(void)).WithName("Method1").WithAttributes()
-                //    .WithParameters(Parameter.Standard(typeof(int), "x"), Parameter.Ref(typeof(int), "y"), Parameter.Out(typeof(int), "z"))
-                //    .WithMethodBody("z = x + y;")
-                //    .Build()
-                .Build();
-            return null;
+            return _dependencyResolver.Resolve<IClass>();
         }
 
         public IInterface DefineInterface()

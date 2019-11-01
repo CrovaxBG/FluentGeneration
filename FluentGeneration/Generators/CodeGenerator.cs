@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using FluentGeneration.Extensions;
+using FluentGeneration.Factories;
 
 namespace FluentGeneration.Generators
 {
@@ -27,7 +28,7 @@ namespace FluentGeneration.Generators
 
             var filteredTokens = VerifyTypeTokens(typeTokens);
 
-            foreach (var data in GenerationData.Where(data => filteredTokens.Contains(TypeExtensions.FormatTypeName(data.Key, false))))
+            foreach (var data in GenerationData.Where(data => filteredTokens.Contains(data.Key.FormatTypeName(false))))
             {
                 pattern = ReplaceTypeToken(pattern, new GenerationData(data.Key, data.Value));
                 filteredTokens.Remove(data.Key.FormatTypeName(false));

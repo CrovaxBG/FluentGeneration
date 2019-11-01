@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentGeneration.Shared;
 
@@ -18,8 +19,8 @@ namespace FluentGeneration.Generators
 
         public string Generate(GenerationData data)
         {
-            var accessModifiers = ((AccessModifiers)data.Data).ToString().Replace(",", string.Empty).Split(' ');
-            return accessModifiers.Aggregate(string.Empty, (current, modifier) => current + " " + ModifiersMap[modifier]);
+            var accessModifiers = ((AccessModifiers)data.Data).ToString().Replace(",", string.Empty).Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            return string.Join(" ", accessModifiers.Select(m => ModifiersMap[m]));
         }
     }
 }

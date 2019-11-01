@@ -1,7 +1,7 @@
 ﻿using System;
 using Unity;
 
-namespace FluentGeneration
+namespace FluentGeneration.Factories
 {
     public class AbstractFactory<T> : IFactory<T>
     {

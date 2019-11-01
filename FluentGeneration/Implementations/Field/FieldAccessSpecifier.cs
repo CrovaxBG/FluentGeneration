@@ -27,7 +27,10 @@ namespace FluentGeneration.Implementations.Field
 
         public IFieldAccessModifier<T> WithAccessSpecifier(AccessSpecifier accessSpecifier)
         {
-            Source.Invoke().Generator.AddGenerationData(typeof(IFieldAccessSpecifier<>), accessSpecifier);
+            if (accessSpecifier != AccessSpecifier.None)
+            {
+                Source.Invoke().Generator.AddGenerationData(typeof(IFieldAccessSpecifier<>), accessSpecifier);
+            }
             return _fieldAccessModifier;
         }
     }

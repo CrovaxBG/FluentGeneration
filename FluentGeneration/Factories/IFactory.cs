@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FluentGeneration
+namespace FluentGeneration.Factories
 {
     public interface IFactory<out T>
     {

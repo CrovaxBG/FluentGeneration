@@ -1,20 +1,22 @@
 ﻿using System;
+using FluentGeneration.Factories;
 using FluentGeneration.Generators;
 using FluentGeneration.Interfaces.Class;
 using FluentGeneration.Interfaces.Field;
 using FluentGeneration.Interfaces.Method;
 using FluentGeneration.Interfaces.Property;
+using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Class
 {
     public class Class : IClass
     {
-        private readonly IFactory<IField<IClass>> _factory;
+        private readonly IFactory<IFluentLink<IClass>> _factory;
 
         public IGenerator Generator { get; }
         public string Data { get; }
 
-        public Class(IGenerator codeGenerator, IFactory<IField<IClass>> factory)
+        public Class(IGenerator codeGenerator, IFactory<IFluentLink<IClass>> factory)
         {
             _factory = factory;
             Generator = codeGenerator;
@@ -24,12 +26,14 @@ namespace FluentGeneration.Implementations.Class
         {
             var instance = _factory.Create(typeof(IField<IClass>));
             instance.Source = () => this;
-            return instance;
+            return (IField<IClass>) instance;
         }
 
         public IProperty<IClass> WithProperty()
         {
-            throw new NotImplementedException();
+            var instance = _factory.Create(typeof(IProperty<IClass>));
+            instance.Source = () => this;
+            return (IProperty<IClass>) instance;
         }
 
         public IMethod<IClass> WithMethod()
