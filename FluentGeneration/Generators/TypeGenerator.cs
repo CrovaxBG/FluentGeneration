@@ -8,6 +8,10 @@ namespace FluentGeneration.Generators
         public string Generate(GenerationData data)
         {
             var type = (Type)data.Data;
+            if (type == typeof(void))
+            {
+                return "void";
+            }
             return type.FormatTypeName();
         }
     }

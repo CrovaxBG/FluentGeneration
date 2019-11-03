@@ -1,7 +1,11 @@
-﻿namespace FluentGeneration.Interfaces.Method
+﻿using FluentGeneration.Shared;
+
+namespace FluentGeneration.Interfaces.Method
 {
-    public interface IMethodBody<out T>
+    public interface IMethodBody<T> : IFluentLink<T>
+        where T : IGeneratedObject
     {
+        T WithEmptyBody();
         T WithMethodBody(string body);
     }
 }

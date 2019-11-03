@@ -27,7 +27,10 @@ namespace FluentGeneration.Implementations.Property
 
         public IPropertyType<T> WithAccessModifier(AccessModifiers accessModifier)
         {
-            Source.Invoke().Generator.AddGenerationData(typeof(IPropertyAccessModifier<>), accessModifier);
+            if (accessModifier != AccessModifiers.None)
+            {
+                Source.Invoke().Generator.AddGenerationData(typeof(IPropertyAccessModifier<>), accessModifier);
+            }
             return _propertyType;
         }
     }

@@ -1,6 +1,9 @@
-﻿namespace FluentGeneration.Interfaces.Method
+﻿using FluentGeneration.Shared;
+
+namespace FluentGeneration.Interfaces.Method
 {
-    public interface IMethodName<out T>
+    public interface IMethodName<T> : IFluentLink<T>
+        where T : IGeneratedObject
     {
         IMethodAttribute<T> WithName(string name);
     }

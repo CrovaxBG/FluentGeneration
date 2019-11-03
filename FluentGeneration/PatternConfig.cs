@@ -13,5 +13,9 @@
     { [IGetAccessSpecifier<>]} {[IGetBody<>]}
     { [ISetAccessSpecifier<>]} {[ISetBody<>]}
 } {= [IPropertyValue<>];}";
+
+        public static string MethodPattern { get; set; } = @"
+{[IMethodAttribute<>]}
+{[IMethodAccessSpecifier<>]} {[IMethodAccessModifier<>]} {[IMethodType<>]} {[IMethodName<>]}({[IMethodParameters<>]}){[IMethodBody<>]}";
     }
 }

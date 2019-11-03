@@ -11,8 +11,10 @@ using FluentGeneration.Interfaces.Field;
 using System.ComponentModel.DataAnnotations;
 using FluentGeneration.Implementations.Class;
 using FluentGeneration.Implementations.Field;
+using FluentGeneration.Implementations.Method;
 using FluentGeneration.Implementations.Property;
 using FluentGeneration.Interfaces.Interface;
+using FluentGeneration.Interfaces.Method;
 using FluentGeneration.Interfaces.Property;
 
 namespace FluentGeneration
@@ -80,6 +82,15 @@ namespace FluentGeneration
             container.RegisterType(typeof(IPropertyValue<>), typeof(PropertyValue<>));
             container.RegisterType(typeof(IProperty<>), typeof(Property<>));
 
+            container.RegisterType(typeof(IMethodAccessSpecifier<>), typeof(MethodAccessSpecifier<>));
+            container.RegisterType(typeof(IMethodAccessModifier<>), typeof(MethodAccessModifier<>));
+            container.RegisterType(typeof(IMethodType<>), typeof(MethodType<>));
+            container.RegisterType(typeof(IMethodName<>), typeof(MethodName<>));
+            container.RegisterType(typeof(IMethodAttribute<>), typeof(MethodAttribute<>));
+            container.RegisterType(typeof(IMethodParameters<>), typeof(MethodParameters<>));
+            container.RegisterType(typeof(IMethodBody<>), typeof(MethodBody<>));
+            container.RegisterType(typeof(IMethod<>), typeof(Method<>));
+
             container.RegisterType(typeof(IClass), typeof(Class));
 
             return container;
@@ -105,6 +116,14 @@ namespace FluentGeneration
             container.RegisterType(typeof(ISetAccessSpecifier<>), typeof(AccessSpecifierGenerator));
             container.RegisterType(typeof(IGetBody<>), typeof(GetBodyGenerator));
             container.RegisterType(typeof(ISetBody<>), typeof(SetBodyGenerator));
+
+            container.RegisterType(typeof(IMethodAccessSpecifier<>), typeof(AccessSpecifierGenerator));
+            container.RegisterType(typeof(IMethodAccessModifier<>), typeof(AccessModifierGenerator));
+            container.RegisterType(typeof(IMethodType<>), typeof(TypeGenerator));
+            container.RegisterType(typeof(IMethodName<>), typeof(NameGenerator));
+            container.RegisterType(typeof(IMethodAttribute<>), typeof(AttributeGenerator));
+            container.RegisterType(typeof(IMethodParameters<>), typeof(MethodParametersGenerator));
+            container.RegisterType(typeof(IMethodBody<>), typeof(MethodBodyGenerator));
 
             return container;
         }

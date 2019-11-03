@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <Folder Include="Implementations\Interface\" />
-    <Folder Include="Implementations\Method\" />
   </ItemGroup>
 
 </Project>

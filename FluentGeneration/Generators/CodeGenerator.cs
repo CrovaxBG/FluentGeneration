@@ -83,7 +83,12 @@ namespace FluentGeneration.Generators
 
         private string ClearSection(string currentCode, string typeToken)
         {
-            var pattern = @"\{[^{}]*\[([" + typeToken + @"]+)\][^{}]*\}";
+            var pattern = @"\{[^{}]*\[([" + typeToken + @"]+)\][^{}]*\} "; //removes 1 extra space
+            var matches = Regex.Match(currentCode, pattern);
+            if (!matches.Success)
+            {
+                pattern = @"\{[^{}]*\[([" + typeToken + @"]+)\][^{}]*\}";//works only for last section
+            }
             return Regex.Replace(currentCode, pattern, string.Empty);
         }
 

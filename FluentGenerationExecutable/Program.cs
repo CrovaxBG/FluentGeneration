@@ -23,7 +23,7 @@ namespace FluentGenerationExecutable
                     .End()
                 .WithProperty()
                     .Begin()
-                        .WithAccessSpecifier(AccessSpecifier.Public).WithAccessModifier(AccessModifiers.Static)
+                        .WithAccessSpecifier(AccessSpecifier.Public).WithAccessModifier(AccessModifiers.None)
                         .WithType(typeof(string)).WithName("Count").WithAttributes(typeof(RequiredAttribute))
                         .WithGetAccessSpecifier(AccessSpecifier.None).WithGetBody("return _count;")
                         .WithSetAccessSpecifier(AccessSpecifier.Private).WithSetBody("_count = value;")
@@ -31,18 +31,41 @@ namespace FluentGenerationExecutable
                     .End()
                 .WithProperty()
                     .Begin()
-                        .WithAccessSpecifier(AccessSpecifier.Public).WithAccessModifier(AccessModifiers.Static)
+                        .WithAccessSpecifier(AccessSpecifier.Public).WithAccessModifier(AccessModifiers.None)
                         .WithType(typeof(string)).WithName("AutoProp").WithAttributes(typeof(RequiredAttribute))
                         .WithGetAccessSpecifier(AccessSpecifier.None).AutoGet()
                         .WithSetAccessSpecifier(AccessSpecifier.None).AutoSet()
                         .WithPropertyValue(null)
+                    .End()
+                .WithMethod()
+                    .Begin()
+                        .WithAccessSpecifier(AccessSpecifier.Public).WithAccessModifier(AccessModifiers.Static)
+                        .WithType(typeof(void)).WithName("Method1").WithAttributes()
+                        .WithParameters(Parameter.Standard(typeof(int), "x"), Parameter.Ref(typeof(int), "y"), Parameter.Out(typeof(int), "z"))
+                        .WithMethodBody("z = x + y;")
+                    .End()
+                .WithMethod()
+                    .Begin()
+                        .WithAccessSpecifier(AccessSpecifier.Public).WithAccessModifier(AccessModifiers.None)
+                        .WithType(typeof(string)).WithName("Method2").WithAttributes()
+                        .WithParameters(Parameter.Standard(typeof(IParameter),"parameter"))
+                        .WithMethodBody(@"var attributes = string.Join(string.Empty,
+    parameter.ParameterAttributes.Select(att => att.FormatTypeName()));
+    var modifier = ModifierMap[parameter.ParameterModifier];
+    var type = parameter.ParameterType.FormatTypeName();
+    var name = parameter.ParameterName;
+    var sections = new[] {attributes, modifier, type, name};
+    var output = sections.Where(section => !string.IsNullOrEmpty(section))
+        .Aggregate(string.Empty, (current, section) => current + section + "" "");
+    return output.TrimEnd(' ');")
+                    .End()
+                .WithMethod()
+                    .Begin()
+                        .WithAccessSpecifier(AccessSpecifier.Public).WithAccessModifier(AccessModifiers.None)
+                        .WithType(typeof(void)).WithName("MethodSignature").WithAttributes()
+                        .WithParameters()
+                        .WithEmptyBody()
                     .End();
-            //.WithMethod()
-            //    .WithAccessSpecifier(AccessSpecifier.Public).WithAccessModifier(AccessModifiers.None)
-            //    .WithType(typeof(void)).WithName("Method1").WithAttributes()
-            //    .WithParameters(Parameter.Standard(typeof(int), "x"), Parameter.Ref(typeof(int), "y"), Parameter.Out(typeof(int), "z"))
-            //    .WithMethodBody("z = x + y;")
-            //    .Build();
             sw.Stop();
             Console.WriteLine(sw.ElapsedMilliseconds);
             Console.ReadKey();

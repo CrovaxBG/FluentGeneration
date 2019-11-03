@@ -38,7 +38,9 @@ namespace FluentGeneration.Implementations.Class
 
         public IMethod<IClass> WithMethod()
         {
-            throw new NotImplementedException();
+            var instance = _factory.Create(typeof(IMethod<IClass>));
+            instance.Source = () => this;
+            return (IMethod<IClass>)instance;
         }
 
         public void Build()
