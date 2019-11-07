@@ -20,14 +20,25 @@
     [IMethodGenericArgumentsConstraints<>]}{[IMethodBody<>]}";
 
         public static string ClassPattern { get; set; } = @"
-{[IClassAttributes]
+{[IClassAttribute<>]
 }{[IClassAccessSpecifier<>]} {[IClassType<>] }class {[IClassName<>]}{<[IClassGenericArguments<>]>} {: [IClassInheritance<>]} {
     [IClassGenericArgumentsConstraints<>]}
 {[IClassBody<>]}
 ";
 
+        public static string InterfacePattern { get; set; } = @"
+{[IInterfaceAttribute<>]
+}{[IInterfaceAccessSpecifier<>]} interface {[IInterfaceName<>]}{<[IInterfaceGenericArguments<>]>} {: [IInterfaceInheritance<>]} {
+    [IInterfaceGenericArgumentsConstraints<>]}
+{[IInterfaceBody<>]}
+";
+
         public static string ClassBodyPattern { get; set; } = @"{
 {[IField<>]}{[IProperty<>]}{[IMethod<>]}
+}";
+
+        public static string InterfaceBodyPattern { get; set; } = @"{
+{[IProperty<>]}{[IMethod<>]}
 }";
     }
 }

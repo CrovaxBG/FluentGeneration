@@ -25,6 +25,11 @@ namespace FluentGeneration.Implementations.Property
             _propertyValue = propertyValue;
         }
 
+        public IPropertyValue<T> NoSet()
+        {
+            return _propertyValue;
+        }
+
         public IPropertyValue<T> AutoSet()
         {
             Source.Invoke().Generator.AddGenerationData(typeof(ISetBody<>), new BodyData { IsAuto = true });

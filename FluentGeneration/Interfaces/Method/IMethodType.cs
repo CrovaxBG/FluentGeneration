@@ -7,5 +7,6 @@ namespace FluentGeneration.Interfaces.Method
         where T : IGeneratedObject
     {
         IMethodName<T> WithType(Type type);
+        IMethodName<T> WithType(string literal);
     }
 }

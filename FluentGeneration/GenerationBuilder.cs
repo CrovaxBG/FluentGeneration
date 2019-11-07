@@ -11,6 +11,7 @@ using FluentGeneration.Interfaces.Field;
 using System.ComponentModel.DataAnnotations;
 using FluentGeneration.Implementations.Class;
 using FluentGeneration.Implementations.Field;
+using FluentGeneration.Implementations.Interface;
 using FluentGeneration.Implementations.Method;
 using FluentGeneration.Implementations.Property;
 using FluentGeneration.Interfaces.Interface;
@@ -53,7 +54,7 @@ namespace FluentGeneration
             container.RegisterType(typeof(IFactory<IGeneratableHandler>), typeof(PatternFactory));
 
             container.RegisterType(typeof(IGenerator), typeof(SingleValueCodeGenerator));
-            container.RegisterType(typeof(IGenerator), typeof(MultipleValueGenerator), "ClassBody");
+            container.RegisterType(typeof(IGenerator), typeof(MultipleValueGenerator), "MultipleValue");
 
             container.RegisterType(typeof(IFieldAccessSpecifier<>), typeof(FieldAccessSpecifier<>));
             container.RegisterType(typeof(IFieldAccessModifier<>), typeof(FieldAccessModifier<>));
@@ -101,9 +102,20 @@ namespace FluentGeneration
             container.RegisterType(typeof(IClassGenericArgumentsConstraints<>), typeof(ClassGenericArgumentsConstraints<>));
             container.RegisterType(typeof(IClassInheritance<>), typeof(ClassInheritance<>));
             container.RegisterType(typeof(IClassBody<>), typeof(ClassBody<>),
-                new InjectionConstructor(new ResolvedParameter<IGenerator>("ClassBody"),
+                new InjectionConstructor(new ResolvedParameter<IGenerator>("MultipleValue"),
                     new ResolvedParameter(typeof(IFactory<>))));
             container.RegisterType(typeof(IClass), typeof(Class));
+
+            container.RegisterType(typeof(IInterfaceAccessSpecifier<>), typeof(InterfaceAccessSpecifier<>));
+            container.RegisterType(typeof(IInterfaceName<>), typeof(InterfaceName<>));
+            container.RegisterType(typeof(IInterfaceAttribute<>), typeof(InterfaceAttribute<>));
+            container.RegisterType(typeof(IInterfaceGenericArguments<>), typeof(InterfaceGenericArguments<>));
+            container.RegisterType(typeof(IInterfaceGenericArgumentsConstraints<>), typeof(InterfaceGenericArgumentsConstraints<>));
+            container.RegisterType(typeof(IInterfaceInheritance<>), typeof(InterfaceInheritance<>));
+            container.RegisterType(typeof(IInterfaceBody<>), typeof(InterfaceBody<>),
+                new InjectionConstructor(new ResolvedParameter<IGenerator>("MultipleValue"),
+                    new ResolvedParameter(typeof(IFactory<>))));
+            container.RegisterType(typeof(IInterface), typeof(Interface));
 
             return container;
         }
@@ -146,7 +158,15 @@ namespace FluentGeneration
             container.RegisterType(typeof(IClassGenericArguments<>), typeof(GenericArgumentsGenerator));
             container.RegisterType(typeof(IClassGenericArgumentsConstraints<>), typeof(GenericArgumentsConstraintsGenerator));
             container.RegisterType(typeof(IClassInheritance<>), typeof(InheritanceGenerator));
-            container.RegisterType(typeof(IClassBody<>), typeof(ClassBodyGenerator));
+            container.RegisterType(typeof(IClassBody<>), typeof(RawStringDataGenerator));
+
+            container.RegisterType(typeof(IInterfaceAccessSpecifier<>), typeof(AccessSpecifierGenerator));
+            container.RegisterType(typeof(IInterfaceName<>), typeof(NameGenerator));
+            container.RegisterType(typeof(IInterfaceAttribute<>), typeof(AttributeGenerator));
+            container.RegisterType(typeof(IInterfaceGenericArguments<>), typeof(GenericArgumentsGenerator));
+            container.RegisterType(typeof(IInterfaceGenericArgumentsConstraints<>), typeof(GenericArgumentsConstraintsGenerator));
+            container.RegisterType(typeof(IInterfaceInheritance<>), typeof(InheritanceGenerator));
+            container.RegisterType(typeof(IInterfaceBody<>), typeof(RawStringDataGenerator));
 
             return container;
         }
@@ -165,7 +185,7 @@ namespace FluentGeneration
 
         public IInterface DefineInterface()
         {
-            return null;
+            return _dependencyResolver.Resolve<IInterface>();
         }
     }
 }

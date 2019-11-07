@@ -7,5 +7,6 @@ namespace FluentGeneration.Interfaces.Field
         where T : IGeneratedObject
     {
         IFieldName<T> WithType(Type type);
+        IFieldName<T> WithType(string literal);
     }
 }

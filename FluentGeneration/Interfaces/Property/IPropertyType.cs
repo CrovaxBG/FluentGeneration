@@ -7,5 +7,6 @@ namespace FluentGeneration.Interfaces.Property
         where T : IGeneratedObject
     {
         IPropertyName<T> WithType(Type type);
+        IPropertyName<T> WithType(string literal);
     }
 }

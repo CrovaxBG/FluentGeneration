@@ -25,7 +25,7 @@ namespace FluentGeneration.Implementations.Class
             _classAttribute = classAttribute;
         }
 
-        public IClassAttribute<T> WithClassName(string name)
+        public IClassAttribute<T> WithName(string name)
         {
             Source.Invoke().Generator.AddGenerationData(typeof(IClassName<>), name);
             return _classAttribute;

@@ -1,6 +1,6 @@
 ﻿namespace FluentGeneration.Generators
 {
-    public class ClassBodyGenerator : IGeneratableHandler
+    public class RawStringDataGenerator : IGeneratableHandler
     {
         public string Generate(GenerationData data)
         {

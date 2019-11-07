@@ -25,6 +25,11 @@ namespace FluentGeneration.Implementations.Property
             _setAccessSpecifier = setAccessSpecifier;
         }
 
+        public ISetAccessSpecifier<T> NoGet()
+        {
+            return _setAccessSpecifier;
+        }
+
         public ISetAccessSpecifier<T> AutoGet()
         {
             Source.Invoke().Generator.AddGenerationData(typeof(IGetBody<>), new BodyData {IsAuto = true});

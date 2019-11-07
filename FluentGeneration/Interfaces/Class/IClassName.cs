@@ -5,6 +5,6 @@ namespace FluentGeneration.Interfaces.Class
     public interface IClassName<T> : IFluentLink<T>
         where T : IGeneratedObject
     {
-        IClassAttribute<T> WithClassName(string name);
+        IClassAttribute<T> WithName(string name);
     }
 }

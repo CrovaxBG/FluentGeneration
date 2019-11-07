@@ -30,5 +30,11 @@ namespace FluentGeneration.Implementations.Property
             Source.Invoke().Generator.AddGenerationData(typeof(IPropertyType<>), type);
             return _propertyName;
         }
+
+        public IPropertyName<T> WithType(string literal)
+        {
+            Source.Invoke().Generator.AddGenerationData(typeof(IPropertyType<>), literal);
+            return _propertyName;
+        }
     }
 }

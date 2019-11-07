@@ -26,7 +26,7 @@ namespace FluentGeneration.Implementations.Class
             _classBody = classBody;
         }
 
-        public IClassBody<T> WithClassInheritance(params Type[] types)
+        public IClassBody<T> WithInheritance(params Type[] types)
         {
             if (types.Any())
             {
@@ -35,7 +35,7 @@ namespace FluentGeneration.Implementations.Class
             return _classBody;
         }
 
-        public IClassBody<T> WithClassInheritance(string literal)
+        public IClassBody<T> WithInheritance(string literal)
         {
             if (!string.IsNullOrEmpty(literal))
             {

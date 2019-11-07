@@ -30,5 +30,11 @@ namespace FluentGeneration.Implementations.Method
             Source.Invoke().Generator.AddGenerationData(typeof(IMethodType<>), type);
             return _methodName;
         }
+
+        public IMethodName<T> WithType(string literal)
+        {
+            Source.Invoke().Generator.AddGenerationData(typeof(IMethodType<>), literal);
+            return _methodName;
+        }
     }
 }

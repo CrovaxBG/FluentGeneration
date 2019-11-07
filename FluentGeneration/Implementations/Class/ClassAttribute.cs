@@ -26,7 +26,7 @@ namespace FluentGeneration.Implementations.Class
             _classGenericArguments = classGenericArguments;
         }
 
-        public IClassGenericArguments<T> WithClassAttributes(params Type[] attributeTypes)
+        public IClassGenericArguments<T> WithAttributes(params Type[] attributeTypes)
         {
             if (attributeTypes.Any())
             {
@@ -36,7 +36,7 @@ namespace FluentGeneration.Implementations.Class
             return _classGenericArguments;
         }
 
-        public IClassGenericArguments<T> WithClassAttributes(string literal)
+        public IClassGenericArguments<T> WithAttributes(string literal)
         {
             if (!string.IsNullOrEmpty(literal))
             {

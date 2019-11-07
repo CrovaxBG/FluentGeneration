@@ -30,5 +30,11 @@ namespace FluentGeneration.Implementations.Field
             Source.Invoke().Generator.AddGenerationData(typeof(IFieldType<>), type);
             return _fieldName;
         }
+
+        public IFieldName<T> WithType(string literal)
+        {
+            Source.Invoke().Generator.AddGenerationData(typeof(IFieldType<>), literal);
+            return _fieldName;
+        }
     }
 }

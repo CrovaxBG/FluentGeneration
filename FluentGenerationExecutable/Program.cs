@@ -14,23 +14,40 @@ namespace FluentGenerationExecutable
     {
         static void Main(string[] args)
         {
-            Stopwatch sw = Stopwatch.StartNew();
+            new GenerationBuilder()
+                .DefineClass()
+                    .Begin()
+                        .WithAccessSpecifier(AccessSpecifier.None).WithClassType(ClassType.Standard).WithName("BasicClass").WithAttributes()
+                        .WithGenericArguments().WithGenericArgumentConstraint().WithInheritance()
+                    .End()
+                .End();
+
+            Console.ReadKey();
+
             new GenerationBuilder()
                 .DefineClass()
                     .Begin()
                         .WithAccessSpecifier(AccessSpecifier.Public).WithClassType(ClassType.Abstract)
-                        .WithClassName("EmptyAbstractClassTest").WithClassAttributes()
-                        .WithGenericArguments(new GenericArgument{Name = "T1"}, new GenericArgument{Name = "T2"})
-                        .WithGenericArgumentConstraint(new GenericArgumentConstraint{GenericArgumentName = "T1", Constraints = new []{typeof(IComparable)}})
-                        .WithClassInheritance("IEnumerable<T1>")
+                        .WithName("AdvancedClass").WithAttributes(@"[System.Obsolete(""use something else"")]")
+                        .WithGenericArguments(
+                            new GenericArgument { Name = "T1" },
+                            new GenericArgument { Name = "T2", Type = GenericArgumentType.Covariant },
+                            new GenericArgument { Name = "T3", Type = GenericArgumentType.Contravariant })
+                        .WithGenericArgumentConstraint(
+                            new GenericArgumentConstraint { GenericArgumentName = "T1", Constraints = new[] { typeof(IComparable) } },
+                            new GenericArgumentConstraint { GenericArgumentName = "T2", Constraints = new[] { typeof(IComparable) } }
+                            )
+                        .WithInheritance("IEnumerable<T1>")
                     .End()
                 .End();
+
             Console.ReadKey();
+
             new GenerationBuilder()
                 .DefineClass()
                     .Begin()
-                    .WithAccessSpecifier(AccessSpecifier.None).WithClassType(ClassType.Standard).WithClassName("qwe")
-                    .WithClassAttributes().WithGenericArguments().WithGenericArgumentConstraint().WithClassInheritance()
+                    .WithAccessSpecifier(AccessSpecifier.Public).WithClassType(ClassType.Standard).WithName("FullClass")
+                    .WithAttributes().WithGenericArguments(new GenericArgument { Name = "T" }).WithGenericArgumentConstraint().WithInheritance()
                         .WithField()
                             .Begin()
                                 .WithAccessSpecifier(AccessSpecifier.Private).WithAccessModifier(AccessModifiers.Static | AccessModifiers.Readonly)
@@ -101,8 +118,69 @@ namespace FluentGenerationExecutable
                             .End()
                         .End()
                     .End();
-            sw.Stop();
-            Console.WriteLine(sw.ElapsedMilliseconds);
+
+            Console.ReadKey();
+
+            new GenerationBuilder()
+                .DefineInterface()
+                    .Begin()
+                        .WithAccessSpecifier(AccessSpecifier.None).WithName("IBasicInterface").WithAttributes()
+                        .WithGenericArguments().WithGenericArgumentConstraint().WithInheritance()
+                    .End()
+                .End();
+
+            Console.ReadKey();
+
+            new GenerationBuilder()
+                .DefineInterface()
+                    .Begin()
+                        .WithAccessSpecifier(AccessSpecifier.Public).WithName("IAdvancedInterface").WithAttributes(@"[System.Obsolete(""use something else"")]")
+                        .WithGenericArguments(
+                            new GenericArgument { Name = "T1" },
+                            new GenericArgument { Name = "T2", Type = GenericArgumentType.Covariant },
+                            new GenericArgument { Name = "T3", Type = GenericArgumentType.Contravariant })
+                        .WithGenericArgumentConstraint(
+                            new GenericArgumentConstraint { GenericArgumentName = "T1", Constraints = new[] { typeof(IComparable) } },
+                            new GenericArgumentConstraint { GenericArgumentName = "T2", Constraints = new[] { typeof(IComparable) } })
+                        .WithInheritance("IEnumerable<T1>")
+                    .End()
+                .End();
+
+            Console.ReadKey();
+
+            new GenerationBuilder()
+                .DefineInterface()
+                    .Begin()
+                        .WithAccessSpecifier(AccessSpecifier.Public).WithName("IFullInterface").WithAttributes()
+                        .WithGenericArguments(new GenericArgument { Name = "T1" }).WithGenericArgumentConstraint().WithInheritance()
+                        .WithMethod()
+                            .Begin()
+                                .WithAccessSpecifier(AccessSpecifier.None).WithAccessModifier(AccessModifiers.None)
+                                .WithType(typeof(void)).WithName("VoidMethod").WithAttributes().WithGenericArguments(new GenericArgument{Name = "T"})
+                                .WithGenericArgumentConstraint().WithParameters().WithEmptyBody()
+                            .End()
+                        .WithMethod()
+                            .Begin()
+                                .WithAccessSpecifier(AccessSpecifier.None).WithAccessModifier(AccessModifiers.None)
+                                .WithType(typeof(void)).WithName("VoidMethod2").WithAttributes().WithGenericArguments()
+                                .WithGenericArgumentConstraint().WithParameters(Parameter.Standard(typeof(int), "intParam")).WithEmptyBody()
+                            .End()
+                        .WithProperty()
+                            .Begin()
+                                .WithAccessSpecifier(AccessSpecifier.None).WithAccessModifier(AccessModifiers.None)
+                                .WithType(typeof(string)).WithName("StringProperty").WithAttributes()
+                                .WithGetAccessSpecifier(AccessSpecifier.None).AutoGet().WithSetAccessSpecifier(AccessSpecifier.None)
+                                .AutoSet().WithNoValue()
+                            .End()
+                        .WithProperty()
+                            .Begin()
+                                .WithAccessSpecifier(AccessSpecifier.None).WithAccessModifier(AccessModifiers.None)
+                                .WithType(typeof(Dictionary<HashSet<int>, List<int>>)).WithName("MapProp").WithAttributes(typeof(RequiredAttribute))
+                                .WithGetAccessSpecifier(AccessSpecifier.None).AutoGet().WithSetAccessSpecifier(AccessSpecifier.None)
+                                .NoSet().WithNoValue()
+                            .End()
+                    .End()
+                .End();
             Console.ReadKey();
         }
     }
