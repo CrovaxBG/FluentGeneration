@@ -2,7 +2,7 @@
 
 namespace FluentGeneration.Interfaces.Interface
 {
-    public interface IInterface : IFluentContainer<IInterface>, IGeneratedObject
+    public interface IInterface : IGeneratedObject
     {
         void Build();
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using FluentGeneration.Interfaces.Property;
 using FluentGeneration.Shared;
 
@@ -27,7 +28,21 @@ namespace FluentGeneration.Implementations.Property
 
         public IGetAccessSpecifier<T> WithAttributes(params Type[] attributeTypes)
         {
-            Source.Invoke().Generator.AddGenerationData(typeof(IPropertyAttribute<>), attributeTypes);
+            if (attributeTypes.Any())
+            {
+                Source.Invoke().Generator.AddGenerationData(typeof(IPropertyAttribute<>), attributeTypes);
+            }
+
+            return _getAccessSpecifier;
+        }
+
+        public IGetAccessSpecifier<T> WithAttributes(string literal)
+        {
+            if (!string.IsNullOrEmpty(literal))
+            {
+                Source.Invoke().Generator.AddGenerationData(typeof(IPropertyAttribute<>), literal);
+            }
+
             return _getAccessSpecifier;
         }
     }

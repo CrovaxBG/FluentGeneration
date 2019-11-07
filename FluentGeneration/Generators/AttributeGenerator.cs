@@ -8,9 +8,9 @@ namespace FluentGeneration.Generators
     {
         public string Generate(GenerationData data)
         {
-            if (data.Data == null)
+            if (data.Data is string literal)
             {
-                return string.Empty;
+                return literal;
             }
 
             var attributes = ((Type[])data.Data).Select(type => $"[{type.FormatTypeName()}]");

@@ -16,6 +16,7 @@ using FluentGeneration.Implementations.Property;
 using FluentGeneration.Interfaces.Interface;
 using FluentGeneration.Interfaces.Method;
 using FluentGeneration.Interfaces.Property;
+using Unity.Injection;
 
 namespace FluentGeneration
 {
@@ -24,27 +25,17 @@ namespace FluentGeneration
         private readonly IDependencyResolver _dependencyResolver;
 
         public GenerationBuilder()
-            : this(null, null)
         {
+            var patternContainer = SetupPatternContainer();
+            var patternResolver = new PatternResolver(patternContainer);
+
+            var diContainer = SetupDIContainer(patternContainer, patternResolver);
+            _dependencyResolver = new UnityResolver(diContainer);
         }
 
-        public GenerationBuilder(IDependencyResolver dependencyResolver, IPatternResolver patternResolver)
+        public GenerationBuilder(IDependencyResolver dependencyResolver)
         {
             _dependencyResolver = dependencyResolver;
-
-            IPatternContainer patternContainer = null;
-
-            if (patternResolver == null)
-            {
-                patternContainer = SetupPatternContainer();
-                patternResolver = new PatternResolver(patternContainer);
-            }
-
-            if (_dependencyResolver == null)
-            {
-                var container = SetupDIContainer(patternContainer, patternResolver);
-                _dependencyResolver = new UnityResolver(container);
-            }
         }
 
         #region Setup Resolvers
@@ -60,7 +51,9 @@ namespace FluentGeneration
 
             container.RegisterType(typeof(IFactory<>), typeof(AbstractFactory<>));
             container.RegisterType(typeof(IFactory<IGeneratableHandler>), typeof(PatternFactory));
-            container.RegisterType(typeof(IGenerator), typeof(CodeGenerator));
+
+            container.RegisterType(typeof(IGenerator), typeof(SingleValueCodeGenerator));
+            container.RegisterType(typeof(IGenerator), typeof(MultipleValueGenerator), "ClassBody");
 
             container.RegisterType(typeof(IFieldAccessSpecifier<>), typeof(FieldAccessSpecifier<>));
             container.RegisterType(typeof(IFieldAccessModifier<>), typeof(FieldAccessModifier<>));
@@ -91,6 +84,25 @@ namespace FluentGeneration
             container.RegisterType(typeof(IMethodBody<>), typeof(MethodBody<>));
             container.RegisterType(typeof(IMethod<>), typeof(Method<>));
 
+            container.RegisterType(typeof(IMethodAccessSpecifier<>), typeof(MethodAccessSpecifier<>));
+            container.RegisterType(typeof(IMethodAccessModifier<>), typeof(MethodAccessModifier<>));
+            container.RegisterType(typeof(IMethodType<>), typeof(MethodType<>));
+            container.RegisterType(typeof(IMethodName<>), typeof(MethodName<>));
+            container.RegisterType(typeof(IMethodGenericArguments<>), typeof(MethodGenericArguments<>));
+            container.RegisterType(typeof(IMethodGenericArgumentsConstraints<>), typeof(MethodGenericArgumentsConstraints<>));
+            container.RegisterType(typeof(IMethodAttribute<>), typeof(MethodAttribute<>));
+            container.RegisterType(typeof(IMethodParameters<>), typeof(MethodParameters<>));
+
+            container.RegisterType(typeof(IClassAccessSpecifier<>), typeof(ClassAccessSpecifier<>));
+            container.RegisterType(typeof(IClassType<>), typeof(ClassType<>));
+            container.RegisterType(typeof(IClassName<>), typeof(ClassName<>));
+            container.RegisterType(typeof(IClassAttribute<>), typeof(ClassAttribute<>));
+            container.RegisterType(typeof(IClassGenericArguments<>), typeof(ClassGenericArguments<>));
+            container.RegisterType(typeof(IClassGenericArgumentsConstraints<>), typeof(ClassGenericArgumentsConstraints<>));
+            container.RegisterType(typeof(IClassInheritance<>), typeof(ClassInheritance<>));
+            container.RegisterType(typeof(IClassBody<>), typeof(ClassBody<>),
+                new InjectionConstructor(new ResolvedParameter<IGenerator>("ClassBody"),
+                    new ResolvedParameter(typeof(IFactory<>))));
             container.RegisterType(typeof(IClass), typeof(Class));
 
             return container;
@@ -122,8 +134,19 @@ namespace FluentGeneration
             container.RegisterType(typeof(IMethodType<>), typeof(TypeGenerator));
             container.RegisterType(typeof(IMethodName<>), typeof(NameGenerator));
             container.RegisterType(typeof(IMethodAttribute<>), typeof(AttributeGenerator));
+            container.RegisterType(typeof(IMethodGenericArguments<>), typeof(GenericArgumentsGenerator));
+            container.RegisterType(typeof(IMethodGenericArgumentsConstraints<>), typeof(GenericArgumentsConstraintsGenerator));
             container.RegisterType(typeof(IMethodParameters<>), typeof(MethodParametersGenerator));
             container.RegisterType(typeof(IMethodBody<>), typeof(MethodBodyGenerator));
+
+            container.RegisterType(typeof(IClassAccessSpecifier<>), typeof(AccessSpecifierGenerator));
+            container.RegisterType(typeof(IClassType<>), typeof(ClassTypeGenerator));
+            container.RegisterType(typeof(IClassName<>), typeof(NameGenerator));
+            container.RegisterType(typeof(IClassAttribute<>), typeof(AttributeGenerator));
+            container.RegisterType(typeof(IClassGenericArguments<>), typeof(GenericArgumentsGenerator));
+            container.RegisterType(typeof(IClassGenericArgumentsConstraints<>), typeof(GenericArgumentsConstraintsGenerator));
+            container.RegisterType(typeof(IClassInheritance<>), typeof(InheritanceGenerator));
+            container.RegisterType(typeof(IClassBody<>), typeof(ClassBodyGenerator));
 
             return container;
         }

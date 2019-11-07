@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using FluentGeneration.Interfaces.Field;
 using FluentGeneration.Shared;
 
@@ -27,7 +28,21 @@ namespace FluentGeneration.Implementations.Field
 
         public IFieldValue<T> WithAttributes(params Type[] attributeTypes)
         {
-            Source.Invoke().Generator.AddGenerationData(typeof(IFieldAttribute<>), attributeTypes);
+            if (attributeTypes.Any())
+            {
+                Source.Invoke().Generator.AddGenerationData(typeof(IFieldAttribute<>), attributeTypes);
+            }
+
+            return _fieldValue;
+        }
+
+        public IFieldValue<T> WithAttributes(string literal)
+        {
+            if (!string.IsNullOrEmpty(literal))
+            {
+                Source.Invoke().Generator.AddGenerationData(typeof(IFieldAttribute<>), literal);
+            }
+
             return _fieldValue;
         }
     }

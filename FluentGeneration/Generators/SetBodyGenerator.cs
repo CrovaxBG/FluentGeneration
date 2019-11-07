@@ -13,9 +13,9 @@ namespace FluentGeneration.Generators
             }
 
             return $@"set
-     {{
-        {bodyData.Body}
-     }}";
+    {{
+       {bodyData.Body}
+    }}";
         }
     }
 }

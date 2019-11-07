@@ -1,51 +1,43 @@
 ﻿using System;
-using FluentGeneration.Factories;
 using FluentGeneration.Generators;
 using FluentGeneration.Interfaces.Class;
 using FluentGeneration.Interfaces.Field;
-using FluentGeneration.Interfaces.Method;
-using FluentGeneration.Interfaces.Property;
-using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Class
 {
     public class Class : IClass
     {
-        private readonly IFactory<IFluentLink<IClass>> _factory;
+        private readonly IClassAccessSpecifier<IClass> _accessSpecifier;
 
         public IGenerator Generator { get; }
-        public string Data { get; }
+        public string Data { get; private set; }
 
-        public Class(IGenerator codeGenerator, IFactory<IFluentLink<IClass>> factory)
+        public Func<IFile> Source { get; set; }
+
+        public Class(IGenerator codeGenerator, IClassAccessSpecifier<IClass> accessSpecifier)
         {
-            _factory = factory;
             Generator = codeGenerator;
+            _accessSpecifier = accessSpecifier;
+            _accessSpecifier.Source = () => this;
         }
 
-        public IField<IClass> WithField()
+        public IFile End()
         {
-            var instance = _factory.Create(typeof(IField<IClass>));
-            instance.Source = () => this;
-            return (IField<IClass>) instance;
+            Data = Generator.Generate(PatternConfig.ClassPattern);
+            Console.Clear();
+            Console.WriteLine(Data);
+            if (Source == null)
+            {
+                //TODO Build file with class
+                return null;
+            }
+            Source.Invoke().Generator.AddGenerationData(typeof(IClass), Data);
+            return Source.Invoke();
         }
 
-        public IProperty<IClass> WithProperty()
+        public IClassAccessSpecifier<IClass> Begin()
         {
-            var instance = _factory.Create(typeof(IProperty<IClass>));
-            instance.Source = () => this;
-            return (IProperty<IClass>) instance;
-        }
-
-        public IMethod<IClass> WithMethod()
-        {
-            var instance = _factory.Create(typeof(IMethod<IClass>));
-            instance.Source = () => this;
-            return (IMethod<IClass>)instance;
-        }
-
-        public void Build()
-        {
-            throw new NotImplementedException();
+            return _accessSpecifier;
         }
     }
 }

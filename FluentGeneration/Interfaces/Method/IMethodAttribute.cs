@@ -6,6 +6,7 @@ namespace FluentGeneration.Interfaces.Method
     public interface IMethodAttribute<T> : IFluentLink<T>
         where T : IGeneratedObject
     {
-        IMethodParameters<T> WithAttributes(params Type[] attributeType);
+        IMethodGenericArguments<T> WithAttributes(params Type[] attributeTypes);
+        IMethodGenericArguments<T> WithAttributes(string literal);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using FluentGeneration.Interfaces.Method;
 using FluentGeneration.Shared;
 
@@ -7,7 +8,7 @@ namespace FluentGeneration.Implementations.Method
     public class MethodAttribute<T> : IMethodAttribute<T>
         where T : IGeneratedObject
     {
-        private readonly IMethodParameters<T> _methodParameters;
+        private readonly MethodGenericArguments<T> _methodGenericArguments;
 
         private Func<T> _source;
         public Func<T> Source
@@ -16,19 +17,33 @@ namespace FluentGeneration.Implementations.Method
             set
             {
                 _source = value;
-                _methodParameters.Source = value;
+                _methodGenericArguments.Source = value;
             }
         }
 
-        public MethodAttribute(IMethodParameters<T> methodParameters)
+        public MethodAttribute(MethodGenericArguments<T> methodGenericArguments)
         {
-            _methodParameters = methodParameters;
+            _methodGenericArguments = methodGenericArguments;
         }
 
-        public IMethodParameters<T> WithAttributes(params Type[] attributeType)
+        public IMethodGenericArguments<T> WithAttributes(params Type[] attributeTypes)
         {
-            Source.Invoke().Generator.AddGenerationData(typeof(IMethodAttribute<>), attributeType);
-            return _methodParameters;
+            if (attributeTypes.Any())
+            {
+                Source.Invoke().Generator.AddGenerationData(typeof(IMethodAttribute<>), attributeTypes);
+            }
+
+            return _methodGenericArguments;
+        }
+
+        public IMethodGenericArguments<T> WithAttributes(string literal)
+        {
+            if (!string.IsNullOrEmpty(literal))
+            {
+                Source.Invoke().Generator.AddGenerationData(typeof(IMethodAttribute<>), literal);
+            }
+
+            return _methodGenericArguments;
         }
     }
 }

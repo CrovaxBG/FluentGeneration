@@ -7,5 +7,6 @@ namespace FluentGeneration.Interfaces.Property
         where T : IGeneratedObject
     {
         IGetAccessSpecifier<T> WithAttributes(params Type[] attributeTypes);
+        IGetAccessSpecifier<T> WithAttributes(string literal);
     }
 }
