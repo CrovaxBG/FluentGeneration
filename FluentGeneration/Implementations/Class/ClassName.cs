@@ -20,11 +20,13 @@ namespace FluentGeneration.Implementations.Class
 
         public ClassName(IClassAttribute classAttribute)
         {
-            _classAttribute = classAttribute;
+            _classAttribute = classAttribute ?? throw new ArgumentNullException(nameof(classAttribute));
         }
 
         public IClassAttribute WithName(string name)
         {
+            if(name == null) { throw new ArgumentNullException(nameof(name)); }
+
             Source.Invoke().Generator.AddGenerationData(typeof(IClassName), name);
             return _classAttribute;
         }

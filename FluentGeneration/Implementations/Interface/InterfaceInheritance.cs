@@ -21,12 +21,12 @@ namespace FluentGeneration.Implementations.Interface
 
         public InterfaceInheritance(IInterfaceBody interfaceBody)
         {
-            _interfaceBody = interfaceBody;
+            _interfaceBody = interfaceBody ?? throw new ArgumentNullException(nameof(interfaceBody));
         }
 
         public IInterfaceBody WithInheritance(params Type[] types)
         {
-            if (types.Any())
+            if (types != null && types.Any())
             {
                 Source.Invoke().Generator.AddGenerationData(typeof(IInterfaceInheritance), types);
             }

@@ -23,12 +23,12 @@ namespace FluentGeneration.Implementations.Method
 
         public MethodGenericArguments(IMethodGenericArgumentsConstraints<T> methodGenericArgumentsConstraints)
         {
-            _methodGenericArgumentsConstraints = methodGenericArgumentsConstraints;
+            _methodGenericArgumentsConstraints = methodGenericArgumentsConstraints ?? throw new ArgumentNullException(nameof(methodGenericArgumentsConstraints));
         }
 
         public IMethodGenericArgumentsConstraints<T> WithGenericArguments(params IGenericArgument[] arguments)
         {
-            if (arguments.Any())
+            if (arguments != null && arguments.Any())
             {
                 Source.Invoke().Generator.AddGenerationData(typeof(IMethodGenericArguments<>), arguments);
             }
@@ -38,11 +38,9 @@ namespace FluentGeneration.Implementations.Method
 
         public IMethodGenericArgumentsConstraints<T> WithGenericArguments(string literal)
         {
-            if (!string.IsNullOrEmpty(literal))
-            {
-                Source.Invoke().Generator.AddGenerationData(typeof(IMethodGenericArguments<>), literal);
-            }
+            if(literal == null) { throw new ArgumentNullException(nameof(literal)); }
 
+            Source.Invoke().Generator.AddGenerationData(typeof(IMethodGenericArguments<>), literal);
             return _methodGenericArgumentsConstraints;
         }
     }

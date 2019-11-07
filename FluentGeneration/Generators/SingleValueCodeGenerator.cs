@@ -16,7 +16,7 @@ namespace FluentGeneration.Generators
 
         public SingleValueCodeGenerator(IFactory<IGeneratableHandler> factory)
         {
-            _factory = factory;
+            _factory = factory ?? throw new ArgumentNullException(nameof(factory));
             GenerationData = new Dictionary<Type, object>();
         }
 
@@ -48,7 +48,7 @@ namespace FluentGeneration.Generators
 
         public override void AddGenerationData(Type type, object data)
         {
-            if (type == null) { return; }
+            if (type == null) { throw new ArgumentNullException(nameof(type)); }
 
             if (GenerationData.ContainsKey(type))
             {

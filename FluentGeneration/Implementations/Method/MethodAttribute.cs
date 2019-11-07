@@ -23,12 +23,12 @@ namespace FluentGeneration.Implementations.Method
 
         public MethodAttribute(MethodGenericArguments<T> methodGenericArguments)
         {
-            _methodGenericArguments = methodGenericArguments;
+            _methodGenericArguments = methodGenericArguments ?? throw new ArgumentNullException(nameof(methodGenericArguments));
         }
 
         public IMethodGenericArguments<T> WithAttributes(params Type[] attributeTypes)
         {
-            if (attributeTypes.Any())
+            if (attributeTypes != null && attributeTypes.Any())
             {
                 Source.Invoke().Generator.AddGenerationData(typeof(IMethodAttribute<>), attributeTypes);
             }

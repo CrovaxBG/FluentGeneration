@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using FluentGeneration.Shared;
 
@@ -17,9 +18,14 @@ namespace FluentGeneration.Generators
                 [AccessModifiers.Volatile.ToString()] = "volatile",
             };
 
+
         public string Generate(GenerationData data)
         {
-            var accessModifiers = ((AccessModifiers)data.Data).ToString().Replace(",", string.Empty).Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if(data == null) { throw new ArgumentNullException(nameof(data)); }
+            if (!(data.Data is AccessModifiers modifiers)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!");}
+
+            var accessModifiers = modifiers.ToString().Replace(",", string.Empty)
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries);
             return string.Join(" ", accessModifiers.Select(m => ModifiersMap[m]));
         }
     }

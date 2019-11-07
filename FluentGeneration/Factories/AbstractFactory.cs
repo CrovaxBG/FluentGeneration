@@ -9,12 +9,14 @@ namespace FluentGeneration.Factories
 
         public AbstractFactory(IUnityContainer container)
         {
-            Container = container;
+            Container = container ?? throw new ArgumentNullException(nameof(container));
         }
 
         public T Create(Type type)
         {
-            return (T)Container.Resolve(type);
+            if(type == null) { throw new ArgumentNullException(nameof(type)); }
+
+            return (T) Container.Resolve(type);
         }
     }
 }

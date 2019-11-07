@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FluentGeneration.Shared;
 
 namespace FluentGeneration.Generators
@@ -18,8 +19,10 @@ namespace FluentGeneration.Generators
 
         public string Generate(GenerationData data)
         {
-            var accessSpecifier = (AccessSpecifier) data.Data;
-            return SpecifiersMap[accessSpecifier];
+            if (data == null) { throw new ArgumentNullException(nameof(data)); }
+            if (!(data.Data is AccessSpecifier specifier)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!"); }
+
+            return SpecifiersMap[specifier];
         }
     }
 }

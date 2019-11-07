@@ -12,7 +12,7 @@ namespace FluentGeneration.Resolvers
 
         public UnityResolver(IUnityContainer container)
         {
-            _container = container;
+            _container = container ?? throw new ArgumentNullException(nameof(container));
         }
 
         public T Resolve<T>()

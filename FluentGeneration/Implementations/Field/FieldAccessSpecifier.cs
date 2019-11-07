@@ -1,5 +1,4 @@
 ﻿using System;
-using FluentGeneration.Interfaces.Class;
 using FluentGeneration.Interfaces.Field;
 using FluentGeneration.Shared;
 
@@ -22,7 +21,7 @@ namespace FluentGeneration.Implementations.Field
 
         public FieldAccessSpecifier(IFieldAccessModifier fieldAccessModifier)
         {
-            _fieldAccessModifier = fieldAccessModifier;
+            _fieldAccessModifier = fieldAccessModifier ?? throw new ArgumentNullException(nameof(fieldAccessModifier));
         }
 
         public IFieldAccessModifier WithAccessSpecifier(AccessSpecifier accessSpecifier)

@@ -8,12 +8,11 @@ namespace FluentGeneration.Generators
     {
         public string Generate(GenerationData data)
         {
-            if (data.Data is string literal)
-            {
-                return literal;
-            }
+            if (data == null) { throw new ArgumentNullException(nameof(data)); }
+            if (data.Data is string literal) { return literal; }
+            if(!(data.Data is Type[] types)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!"); }
 
-            var attributes = ((Type[])data.Data).Select(type => $"[{type.FormatTypeName()}]");
+            var attributes = types.Select(type => $"[{type.FormatTypeName()}]");
             return string.Join(Environment.NewLine, attributes);
         }
     }

@@ -22,11 +22,13 @@ namespace FluentGeneration.Implementations.Property
 
         public PropertyName(IPropertyAttribute<T> propertyAttribute)
         {
-            _propertyAttribute = propertyAttribute;
+            _propertyAttribute = propertyAttribute ?? throw new ArgumentNullException(nameof(propertyAttribute));
         }
 
         public IPropertyAttribute<T> WithName(string name)
         {
+            if(name == null) { throw new ArgumentNullException(nameof(name)); }
+
             Source.Invoke().Generator.AddGenerationData(typeof(IPropertyName<>), name);
             return _propertyAttribute;
         }

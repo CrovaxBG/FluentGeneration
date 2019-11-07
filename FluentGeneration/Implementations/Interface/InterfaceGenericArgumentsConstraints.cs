@@ -22,12 +22,12 @@ namespace FluentGeneration.Implementations.Interface
 
         public InterfaceGenericArgumentsConstraints(IInterfaceInheritance interfaceInheritance)
         {
-            _interfaceInheritance = interfaceInheritance;
+            _interfaceInheritance = interfaceInheritance ?? throw new ArgumentNullException(nameof(interfaceInheritance));
         }
 
         public IInterfaceInheritance WithGenericArgumentConstraint(params IGenericArgumentConstraint[] constraints)
         {
-            if (constraints.Any())
+            if (constraints != null && constraints.Any())
             {
                 Source.Invoke().Generator.AddGenerationData(typeof(IInterfaceGenericArgumentsConstraints), constraints);
             }

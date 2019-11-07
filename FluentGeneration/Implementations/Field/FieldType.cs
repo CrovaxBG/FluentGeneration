@@ -21,11 +21,13 @@ namespace FluentGeneration.Implementations.Field
 
         public FieldType(IFieldName fieldName)
         {
-            _fieldName = fieldName;
+            _fieldName = fieldName ?? throw new ArgumentNullException(nameof(fieldName));
         }
 
         public IFieldName WithType(Type type)
         {
+            if(type == null) { throw new ArgumentNullException(nameof(type)); }
+
             Source.Invoke().Generator.AddGenerationData(typeof(IFieldType), type);
             return _fieldName;
         }

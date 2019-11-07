@@ -16,8 +16,8 @@ namespace FluentGeneration.Implementations.Property
 
         public Property(IGenerator generator, IPropertyAccessSpecifier<IProperty<T>> accessSpecifier)
         {
-            Generator = generator;
-            _accessSpecifier = accessSpecifier;
+            Generator = generator ?? throw new ArgumentNullException(nameof(generator));
+            _accessSpecifier = accessSpecifier ?? throw new ArgumentNullException(nameof(accessSpecifier));
             _accessSpecifier.Source = () => this;
         }
 

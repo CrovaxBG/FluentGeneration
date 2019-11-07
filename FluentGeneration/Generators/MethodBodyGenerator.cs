@@ -1,4 +1,5 @@
-﻿using FluentGeneration.Shared;
+﻿using System;
+using FluentGeneration.Shared;
 
 namespace FluentGeneration.Generators
 {
@@ -6,11 +7,10 @@ namespace FluentGeneration.Generators
     {
         public string Generate(GenerationData data)
         {
-            var bodyData = (BodyData) data.Data;
-            if (bodyData.IsAuto)
-            {
-                return ";";
-            }
+            if (data == null) { throw new ArgumentNullException(nameof(data)); }
+            if (!(data.Data is BodyData bodyData)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!"); }
+
+            if (bodyData.IsAuto) { return ";"; }
 
             return $@"
 {{

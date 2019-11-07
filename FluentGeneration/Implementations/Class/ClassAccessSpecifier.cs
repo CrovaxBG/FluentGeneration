@@ -21,7 +21,7 @@ namespace FluentGeneration.Implementations.Class
 
         public ClassAccessSpecifier(IClassType classType)
         {
-            _classType = classType;
+            _classType = classType ?? throw new ArgumentNullException(nameof(classType));
         }
 
         public IClassType WithAccessSpecifier(AccessSpecifier accessSpecifier)

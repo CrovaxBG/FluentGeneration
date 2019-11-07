@@ -22,12 +22,12 @@ namespace FluentGeneration.Implementations.Field
 
         public FieldAttribute(IFieldValue fieldValue)
         {
-            _fieldValue = fieldValue;
+            _fieldValue = fieldValue ?? throw new ArgumentNullException(nameof(fieldValue));
         }
 
         public IFieldValue WithAttributes(params Type[] attributeTypes)
         {
-            if (attributeTypes.Any())
+            if (attributeTypes != null && attributeTypes.Any())
             {
                 Source.Invoke().Generator.AddGenerationData(typeof(IFieldAttribute), attributeTypes);
             }

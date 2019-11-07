@@ -19,8 +19,8 @@ namespace FluentGeneration.Implementations.Interface
 
         public InterfaceBody(IGenerator generator, IFactory<IFluentLink<IInterfaceBody>> factory)
         {
-            Generator = generator;
-            _factory = factory;
+            Generator = generator ?? throw new ArgumentNullException(nameof(generator));
+            _factory = factory ?? throw new ArgumentNullException(nameof(factory));
         }
 
         public IInterface End()

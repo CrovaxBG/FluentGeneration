@@ -22,17 +22,21 @@ namespace FluentGeneration.Implementations.Method
 
         public MethodType(IMethodName<T> methodName)
         {
-            _methodName = methodName;
+            _methodName = methodName ?? throw new ArgumentNullException(nameof(methodName));
         }
 
         public IMethodName<T> WithType(Type type)
         {
+            if(type == null) { throw new ArgumentNullException(nameof(type)); }
+
             Source.Invoke().Generator.AddGenerationData(typeof(IMethodType<>), type);
             return _methodName;
         }
 
         public IMethodName<T> WithType(string literal)
         {
+            if (literal == null) { throw new ArgumentNullException(nameof(literal)); }
+
             Source.Invoke().Generator.AddGenerationData(typeof(IMethodType<>), literal);
             return _methodName;
         }

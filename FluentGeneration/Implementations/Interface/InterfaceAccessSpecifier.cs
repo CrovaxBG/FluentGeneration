@@ -21,7 +21,7 @@ namespace FluentGeneration.Implementations.Interface
 
         public InterfaceAccessSpecifier(IInterfaceName interfaceName)
         {
-            _interfaceName = interfaceName;
+            _interfaceName = interfaceName ?? throw new ArgumentNullException(nameof(interfaceName));
         }
 
         public IInterfaceName WithAccessSpecifier(AccessSpecifier accessSpecifier)

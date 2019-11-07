@@ -21,12 +21,12 @@ namespace FluentGeneration.Implementations.Class
 
         public ClassInheritance(IClassBody classBody)
         {
-            _classBody = classBody;
+            _classBody = classBody ?? throw new ArgumentNullException(nameof(classBody));
         }
 
         public IClassBody WithInheritance(params Type[] types)
         {
-            if (types.Any())
+            if (types != null && types.Any())
             {
                 Source.Invoke().Generator.AddGenerationData(typeof(IClassInheritance), types);
             }

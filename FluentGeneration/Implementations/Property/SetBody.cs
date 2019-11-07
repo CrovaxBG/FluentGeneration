@@ -22,7 +22,7 @@ namespace FluentGeneration.Implementations.Property
 
         public SetBody(IPropertyValue<T> propertyValue)
         {
-            _propertyValue = propertyValue;
+            _propertyValue = propertyValue ?? throw new ArgumentNullException(nameof(propertyValue));
         }
 
         public IPropertyValue<T> NoSet()

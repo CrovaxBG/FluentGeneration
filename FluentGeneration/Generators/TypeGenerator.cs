@@ -7,11 +7,11 @@ namespace FluentGeneration.Generators
     {
         public string Generate(GenerationData data)
         {
-            var type = (Type)data.Data;
-            if (type == typeof(void))
-            {
-                return "void";
-            }
+            if (data == null) { throw new ArgumentNullException(nameof(data)); }
+            if (!(data.Data is Type type)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!"); }
+
+            if (type == typeof(void)) { return "void"; }
+
             return type.FormatTypeName();
         }
     }

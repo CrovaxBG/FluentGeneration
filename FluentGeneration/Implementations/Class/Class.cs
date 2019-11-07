@@ -15,8 +15,8 @@ namespace FluentGeneration.Implementations.Class
 
         public Class(IGenerator codeGenerator, IClassAccessSpecifier accessSpecifier)
         {
-            Generator = codeGenerator;
-            _accessSpecifier = accessSpecifier;
+            Generator = codeGenerator ?? throw new ArgumentNullException(nameof(codeGenerator));
+            _accessSpecifier = accessSpecifier ?? throw new ArgumentNullException(nameof(accessSpecifier));
             _accessSpecifier.Source = () => this;
         }
 

@@ -22,7 +22,7 @@ namespace FluentGeneration.Implementations.Property
 
         public SetAccessSpecifier(ISetBody<T> setBody)
         {
-            _setBody = setBody;
+            _setBody = setBody ?? throw new ArgumentNullException(nameof(setBody));
         }
 
         public ISetBody<T> WithSetAccessSpecifier(AccessSpecifier accessSpecifier)

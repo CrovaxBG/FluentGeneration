@@ -22,7 +22,7 @@ namespace FluentGeneration.Implementations.Method
 
         public MethodAccessSpecifier(IMethodAccessModifier<T> methodAccessModifier)
         {
-            _methodAccessModifier = methodAccessModifier;
+            _methodAccessModifier = methodAccessModifier ?? throw new ArgumentNullException(nameof(methodAccessModifier));
         }
 
         public IMethodAccessModifier<T> WithAccessSpecifier(AccessSpecifier accessSpecifier)

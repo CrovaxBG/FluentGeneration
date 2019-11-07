@@ -22,7 +22,7 @@ namespace FluentGeneration.Implementations.Property
 
         public GetBody(ISetAccessSpecifier<T> setAccessSpecifier)
         {
-            _setAccessSpecifier = setAccessSpecifier;
+            _setAccessSpecifier = setAccessSpecifier ?? throw new ArgumentNullException(nameof(setAccessSpecifier));
         }
 
         public ISetAccessSpecifier<T> NoGet()
@@ -38,6 +38,8 @@ namespace FluentGeneration.Implementations.Property
 
         public ISetAccessSpecifier<T> WithGetBody(string body)
         {
+            if(body == null) { throw new ArgumentNullException(nameof(body)); }
+
             Source.Invoke().Generator.AddGenerationData(typeof(IGetBody<>), new BodyData {IsAuto = false, Body = body});
             return _setAccessSpecifier;
         }

@@ -22,15 +22,16 @@ namespace FluentGeneration.Implementations.Class
 
         public ClassGenericArguments(IClassGenericArgumentsConstraints classGenericArgumentsConstraints)
         {
-            _classGenericArgumentsConstraints = classGenericArgumentsConstraints;
+            _classGenericArgumentsConstraints = classGenericArgumentsConstraints ?? throw new ArgumentNullException(nameof(classGenericArgumentsConstraints));
         }
 
         public IClassGenericArgumentsConstraints WithGenericArguments(params IGenericArgument[] arguments)
         {
-            if (arguments.Any())
+            if (arguments != null && arguments.Any())
             {
                 Source.Invoke().Generator.AddGenerationData(typeof(IClassGenericArguments), arguments);
             }
+
             return _classGenericArgumentsConstraints;
         }
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using FluentGeneration.Interfaces.Class;
 using FluentGeneration.Interfaces.Field;
 
 namespace FluentGeneration.Implementations.Field
@@ -21,11 +20,13 @@ namespace FluentGeneration.Implementations.Field
 
         public FieldName(IFieldAttribute fieldAttribute)
         {
-            _fieldAttribute = fieldAttribute;
+            _fieldAttribute = fieldAttribute ?? throw new ArgumentNullException(nameof(fieldAttribute));
         }
 
         public IFieldAttribute WithName(string name)
         {
+            if(name == null) { throw new ArgumentNullException(nameof(name)); }
+
             Source.Invoke().Generator.AddGenerationData(typeof(IFieldName), name);
             return _fieldAttribute;
         }

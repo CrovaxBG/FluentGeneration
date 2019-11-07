@@ -11,6 +11,10 @@ namespace FluentGeneration.Shared
 
         public static IParameter Standard(Type parameterType, string parameterName, params Type[] parameterAttributes)
         {
+            if(parameterType == null) { throw new ArgumentNullException(nameof(parameterType)); }
+            if(parameterName == null) { throw new ArgumentNullException(nameof(parameterType)); }
+            if(parameterAttributes == null) { throw new ArgumentNullException(nameof(parameterAttributes)); }
+
             return new Parameter
             {
                 ParameterModifier = ParameterModifier.Standard,
@@ -22,6 +26,10 @@ namespace FluentGeneration.Shared
 
         public static IParameter Ref(Type parameterType, string parameterName, params Type[] parameterAttributes)
         {
+            if (parameterType == null) { throw new ArgumentNullException(nameof(parameterType)); }
+            if (parameterName == null) { throw new ArgumentNullException(nameof(parameterType)); }
+            if (parameterAttributes == null) { throw new ArgumentNullException(nameof(parameterAttributes)); }
+
             return new Parameter
             {
                 ParameterModifier = ParameterModifier.Ref,
@@ -33,6 +41,10 @@ namespace FluentGeneration.Shared
 
         public static IParameter Out(Type parameterType, string parameterName, params Type[] parameterAttributes)
         {
+            if (parameterType == null) { throw new ArgumentNullException(nameof(parameterType)); }
+            if (parameterName == null) { throw new ArgumentNullException(nameof(parameterType)); }
+            if (parameterAttributes == null) { throw new ArgumentNullException(nameof(parameterAttributes)); }
+
             return new Parameter
             {
                 ParameterModifier = ParameterModifier.Out,

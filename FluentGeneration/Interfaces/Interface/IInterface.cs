@@ -1,4 +1,5 @@
 ﻿using FluentGeneration.Interfaces.Class;
+using FluentGeneration.Interfaces.File;
 using FluentGeneration.Shared;
 
 namespace FluentGeneration.Interfaces.Interface

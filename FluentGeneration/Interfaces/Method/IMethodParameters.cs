@@ -5,6 +5,7 @@ namespace FluentGeneration.Interfaces.Method
     public interface IMethodParameters<T> : IFluentLink<T>
         where T : IGeneratedObject
     {
-        IMethodBody<T> WithParameters(params IParameter[] parameterType);
+        IMethodBody<T> WithParameters(params IParameter[] parameterTypes);
+        IMethodBody<T> WithParameters(string literal);
     }
 }

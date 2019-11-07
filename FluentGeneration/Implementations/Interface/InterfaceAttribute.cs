@@ -21,12 +21,12 @@ namespace FluentGeneration.Implementations.Interface
 
         public InterfaceAttribute(IInterfaceGenericArguments interfaceGenericArguments)
         {
-            _interfaceGenericArguments = interfaceGenericArguments;
+            _interfaceGenericArguments = interfaceGenericArguments ?? throw new ArgumentNullException(nameof(interfaceGenericArguments));
         }
 
         public IInterfaceGenericArguments WithAttributes(params Type[] attributeTypes)
         {
-            if (attributeTypes.Any())
+            if (attributeTypes != null && attributeTypes.Any())
             {
                 Source.Invoke().Generator.AddGenerationData(typeof(IInterfaceAttribute), attributeTypes);
             }

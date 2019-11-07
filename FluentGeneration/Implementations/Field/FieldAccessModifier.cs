@@ -21,7 +21,7 @@ namespace FluentGeneration.Implementations.Field
 
         public FieldAccessModifier(IFieldType fieldType)
         {
-            _fieldType = fieldType;
+            _fieldType = fieldType ?? throw new ArgumentNullException(nameof(fieldType));
         }
 
         public IFieldType WithAccessModifier(AccessModifiers accessModifiers)

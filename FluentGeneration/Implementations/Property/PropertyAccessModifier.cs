@@ -22,7 +22,7 @@ namespace FluentGeneration.Implementations.Property
 
         public PropertyAccessModifier(IPropertyType<T> propertyType)
         {
-            _propertyType = propertyType;
+            _propertyType = propertyType ?? throw new ArgumentNullException(nameof(propertyType));
         }
 
         public IPropertyType<T> WithAccessModifier(AccessModifiers accessModifier)

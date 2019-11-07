@@ -7,7 +7,7 @@ namespace FluentGeneration.Implementations.Method
     public class MethodAccessModifier<T> : IMethodAccessModifier<T>
         where T : IGeneratedObject
     {
-        private readonly IMethodType<T> _methodAccessModifier;
+        private readonly IMethodType<T> _methodType;
 
         private Func<T> _source;
         public Func<T> Source
@@ -16,13 +16,13 @@ namespace FluentGeneration.Implementations.Method
             set
             {
                 _source = value;
-                _methodAccessModifier.Source = value;
+                _methodType.Source = value;
             }
         }
 
-        public MethodAccessModifier(IMethodType<T> methodAccessModifier)
+        public MethodAccessModifier(IMethodType<T> methodType)
         {
-            _methodAccessModifier = methodAccessModifier;
+            _methodType = methodType ?? throw new ArgumentNullException(nameof(methodType));
         }
 
         public IMethodType<T> WithAccessModifier(AccessModifiers accessModifier)
@@ -31,7 +31,7 @@ namespace FluentGeneration.Implementations.Method
             {
                 Source.Invoke().Generator.AddGenerationData(typeof(IMethodAccessModifier<>), accessModifier);
             }
-            return _methodAccessModifier;
+            return _methodType;
         }
     }
 }

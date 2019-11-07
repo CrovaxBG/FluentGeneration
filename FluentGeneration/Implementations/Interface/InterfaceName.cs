@@ -20,11 +20,13 @@ namespace FluentGeneration.Implementations.Interface
 
         public InterfaceName(IInterfaceAttribute interfaceAttribute)
         {
-            _interfaceAttribute = interfaceAttribute;
+            _interfaceAttribute = interfaceAttribute ?? throw new ArgumentNullException(nameof(interfaceAttribute));
         }
 
         public IInterfaceAttribute WithName(string name)
         {
+            if (string.IsNullOrEmpty(name)) { throw new ArgumentNullException(nameof(name)); }
+
             Source.Invoke().Generator.AddGenerationData(typeof(IInterfaceName), name);
             return _interfaceAttribute;
         }

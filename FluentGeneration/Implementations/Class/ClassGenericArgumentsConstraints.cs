@@ -22,12 +22,12 @@ namespace FluentGeneration.Implementations.Class
 
         public ClassGenericArgumentsConstraints(IClassInheritance classInheritance)
         {
-            _classInheritance = classInheritance;
+            _classInheritance = classInheritance ?? throw new ArgumentNullException(nameof(classInheritance));
         }
 
         public IClassInheritance WithGenericArgumentConstraint(params IGenericArgumentConstraint[] constraints)
         {
-            if (constraints.Any())
+            if (constraints !=null && constraints.Any())
             {
                 Source.Invoke().Generator.AddGenerationData(typeof(IClassGenericArgumentsConstraints), constraints);
             }

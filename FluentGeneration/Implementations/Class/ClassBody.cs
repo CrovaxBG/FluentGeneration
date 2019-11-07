@@ -20,8 +20,8 @@ namespace FluentGeneration.Implementations.Class
 
         public ClassBody(IGenerator generator, IFactory<IFluentLink<IClassBody>> factory)
         {
-            Generator = generator;
-            _factory = factory;
+            Generator = generator ?? throw new ArgumentNullException(nameof(generator));
+            _factory = factory ?? throw new ArgumentNullException(nameof(factory));
         }
 
         public IClass End()

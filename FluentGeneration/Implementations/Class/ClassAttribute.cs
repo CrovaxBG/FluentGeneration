@@ -21,12 +21,12 @@ namespace FluentGeneration.Implementations.Class
 
         public ClassAttribute(IClassGenericArguments classGenericArguments)
         {
-            _classGenericArguments = classGenericArguments;
+            _classGenericArguments = classGenericArguments ?? throw new ArgumentNullException(nameof(classGenericArguments));
         }
 
         public IClassGenericArguments WithAttributes(params Type[] attributeTypes)
         {
-            if (attributeTypes.Any())
+            if (attributeTypes != null && attributeTypes.Any())
             {
                 Source.Invoke().Generator.AddGenerationData(typeof(IClassAttribute), attributeTypes);
             }

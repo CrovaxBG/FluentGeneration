@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentGeneration.Shared;
 
@@ -16,7 +17,9 @@ namespace FluentGeneration.Generators
 
         public string Generate(GenerationData data)
         {
-            var arguments = (IGenericArgument[]) data.Data;
+            if (data == null) { throw new ArgumentNullException(nameof(data)); }
+            if (!(data.Data is IGenericArgument[] arguments)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!"); }
+
             return string.Join(", ",
                 arguments.Select(arg =>
                     $"{_typesMap[arg.Type] + (arg.Type == GenericArgumentType.Standard ? string.Empty : " ")}{arg.Name}"));

@@ -22,7 +22,7 @@ namespace FluentGeneration.Implementations.Property
 
         public GetAccessSpecifier(IGetBody<T> getBody)
         {
-            _getBody = getBody;
+            _getBody = getBody ?? throw new ArgumentNullException(nameof(getBody));
         }
 
         public IGetBody<T> WithGetAccessSpecifier(AccessSpecifier accessSpecifier)

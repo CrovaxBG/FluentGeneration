@@ -45,10 +45,7 @@ namespace FluentGeneration.Generators
 
         public override void AddGenerationData(Type type, object data)
         {
-            if (type == null)
-            {
-                return;
-            }
+            if (type == null) { throw new ArgumentNullException(nameof(type)); }
 
             if (GenerationData.TryGetValue(type, out var values))
             {

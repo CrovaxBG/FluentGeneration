@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FluentGeneration.Shared;
 
 namespace FluentGeneration.Generators
@@ -16,7 +17,9 @@ namespace FluentGeneration.Generators
 
         public string Generate(GenerationData data)
         {
-            var classType = (ClassType) data.Data;
+            if (data == null) { throw new ArgumentNullException(nameof(data)); }
+            if (!(data.Data is ClassType classType)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!"); }
+
             return SpecifiersMap[classType];
         }
     }

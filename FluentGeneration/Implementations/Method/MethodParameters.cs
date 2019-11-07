@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using FluentGeneration.Interfaces.Method;
 using FluentGeneration.Shared;
 
@@ -22,12 +23,24 @@ namespace FluentGeneration.Implementations.Method
 
         public MethodParameters(IMethodBody<T> methodBody)
         {
-            _methodBody = methodBody;
+            _methodBody = methodBody ?? throw new ArgumentNullException(nameof(methodBody));
         }
 
-        public IMethodBody<T> WithParameters(params IParameter[] parameterType)
+        public IMethodBody<T> WithParameters(params IParameter[] parameterTypes)
         {
-            Source.Invoke().Generator.AddGenerationData(typeof(IMethodParameters<>), parameterType);
+            if (parameterTypes != null && parameterTypes.Any())
+            {
+                Source.Invoke().Generator.AddGenerationData(typeof(IMethodParameters<>), parameterTypes);
+            }
+
+            return _methodBody;
+        }
+
+        public IMethodBody<T> WithParameters(string literal)
+        {
+            if (literal == null) { throw new ArgumentNullException(nameof(literal)); }
+
+            Source.Invoke().Generator.AddGenerationData(typeof(IMethodParameters<>), literal);
             return _methodBody;
         }
     }

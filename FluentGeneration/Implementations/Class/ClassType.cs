@@ -20,7 +20,7 @@ namespace FluentGeneration.Implementations.Class
 
         public ClassType(IClassName className)
         {
-            _className = className;
+            _className = className ?? throw new ArgumentNullException(nameof(className));
         }
 
         public IClassName WithClassType(FluentGeneration.Shared.ClassType classType)

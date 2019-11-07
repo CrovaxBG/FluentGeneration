@@ -1,4 +1,5 @@
-﻿using Unity;
+﻿using System;
+using Unity;
 using Unity.Lifetime;
 using FluentGeneration.Factories;
 using FluentGeneration.Resolvers;
@@ -11,6 +12,7 @@ using FluentGeneration.Implementations.Field;
 using FluentGeneration.Implementations.Interface;
 using FluentGeneration.Implementations.Method;
 using FluentGeneration.Implementations.Property;
+using FluentGeneration.Interfaces.File;
 using FluentGeneration.Interfaces.Interface;
 using FluentGeneration.Interfaces.Method;
 using FluentGeneration.Interfaces.Property;
@@ -35,7 +37,22 @@ namespace FluentGeneration
 
         public GenerationBuilder(IDependencyResolver dependencyResolver)
         {
-            _dependencyResolver = dependencyResolver;
+            _dependencyResolver = dependencyResolver ?? throw new ArgumentNullException(nameof(dependencyResolver));
+        }
+
+        public IFile DefineFile()
+        {
+            return _dependencyResolver.Resolve<IFile>();
+        }
+
+        public IClass DefineClass()
+        {
+            return _dependencyResolver.Resolve<IClass>();
+        }
+
+        public IInterface DefineInterface()
+        {
+            return _dependencyResolver.Resolve<IInterface>();
         }
 
         #region Setup Resolvers
@@ -209,20 +226,5 @@ namespace FluentGeneration
         }
 
         #endregion
-
-        public void DefineFile()
-        {
-
-        }
-
-        public IClass DefineClass()
-        {
-            return _dependencyResolver.Resolve<IClass>();
-        }
-
-        public IInterface DefineInterface()
-        {
-            return _dependencyResolver.Resolve<IInterface>();
-        }
     }
 }

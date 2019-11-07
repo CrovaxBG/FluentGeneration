@@ -10,11 +10,13 @@ namespace FluentGeneration.Factories
 
         public PatternFactory(IPatternContainer container)
         {
-            Container = container;
+            Container = container ?? throw new ArgumentNullException(nameof(container));
         }
 
         public virtual IGeneratableHandler Create(Type type)
         {
+            if(type == null) { throw new ArgumentNullException(nameof(type)); }
+
             return Container.Resolve(type);
         }
     }

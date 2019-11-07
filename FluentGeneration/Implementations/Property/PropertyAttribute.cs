@@ -23,12 +23,12 @@ namespace FluentGeneration.Implementations.Property
 
         public PropertyAttribute(IGetAccessSpecifier<T> getAccessSpecifier)
         {
-            _getAccessSpecifier = getAccessSpecifier;
+            _getAccessSpecifier = getAccessSpecifier ?? throw new ArgumentNullException(nameof(getAccessSpecifier));
         }
 
         public IGetAccessSpecifier<T> WithAttributes(params Type[] attributeTypes)
         {
-            if (attributeTypes.Any())
+            if (attributeTypes != null && attributeTypes.Any())
             {
                 Source.Invoke().Generator.AddGenerationData(typeof(IPropertyAttribute<>), attributeTypes);
             }
@@ -38,11 +38,9 @@ namespace FluentGeneration.Implementations.Property
 
         public IGetAccessSpecifier<T> WithAttributes(string literal)
         {
-            if (!string.IsNullOrEmpty(literal))
-            {
-                Source.Invoke().Generator.AddGenerationData(typeof(IPropertyAttribute<>), literal);
-            }
+            if(literal == null) { throw new ArgumentNullException(nameof(literal)); }
 
+            Source.Invoke().Generator.AddGenerationData(typeof(IPropertyAttribute<>), literal);
             return _getAccessSpecifier;
         }
     }
