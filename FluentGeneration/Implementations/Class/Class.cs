@@ -1,6 +1,7 @@
 ﻿using System;
 using FluentGeneration.Generators;
 using FluentGeneration.Interfaces.Class;
+using FluentGeneration.Interfaces.File;
 
 namespace FluentGeneration.Implementations.Class
 {
