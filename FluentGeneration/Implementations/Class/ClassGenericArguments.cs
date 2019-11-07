@@ -5,13 +5,12 @@ using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Class
 {
-    public class ClassGenericArguments<T> : IClassGenericArguments<T>
-        where T : IGeneratedObject
+    public class ClassGenericArguments : IClassGenericArguments
     {
-        private readonly IClassGenericArgumentsConstraints<T> _classGenericArgumentsConstraints;
+        private readonly IClassGenericArgumentsConstraints _classGenericArgumentsConstraints;
 
-        private Func<T> _source;
-        public Func<T> Source
+        private Func<IClass> _source;
+        public Func<IClass> Source
         {
             get => _source;
             set
@@ -21,16 +20,16 @@ namespace FluentGeneration.Implementations.Class
             }
         }
 
-        public ClassGenericArguments(IClassGenericArgumentsConstraints<T> classGenericArgumentsConstraints)
+        public ClassGenericArguments(IClassGenericArgumentsConstraints classGenericArgumentsConstraints)
         {
             _classGenericArgumentsConstraints = classGenericArgumentsConstraints;
         }
 
-        public IClassGenericArgumentsConstraints<T> WithGenericArguments(params IGenericArgument[] arguments)
+        public IClassGenericArgumentsConstraints WithGenericArguments(params IGenericArgument[] arguments)
         {
             if (arguments.Any())
             {
-                Source.Invoke().Generator.AddGenerationData(typeof(IClassGenericArguments<>), arguments);
+                Source.Invoke().Generator.AddGenerationData(typeof(IClassGenericArguments), arguments);
             }
             return _classGenericArgumentsConstraints;
         }

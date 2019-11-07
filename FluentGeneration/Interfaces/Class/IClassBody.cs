@@ -5,11 +5,10 @@ using FluentGeneration.Shared;
 
 namespace FluentGeneration.Interfaces.Class
 {
-    public interface IClassBody<T> : IGeneratedObject, IFluentLink<T>, IEndable<T>
-        where T : IGeneratedObject
+    public interface IClassBody : IGeneratedObject, IFluentLink<IClass>, IEndable<IClass>
     {
-        IField<IClassBody<T>> WithField();
-        IProperty<IClassBody<T>> WithProperty();
-        IMethod<IClassBody<T>> WithMethod();
+        IField WithField();
+        IProperty<IClassBody> WithProperty();
+        IMethod<IClassBody> WithMethod();
     }
 }

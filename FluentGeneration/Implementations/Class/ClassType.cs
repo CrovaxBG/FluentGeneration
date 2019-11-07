@@ -1,16 +1,14 @@
 ﻿using System;
 using FluentGeneration.Interfaces.Class;
-using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Class
 {
-    public class ClassType<T> : IClassType<T>
-        where T : IGeneratedObject
+    public class ClassType : IClassType
     {
-        private readonly IClassName<T> _className;
+        private readonly IClassName _className;
 
-        private Func<T> _source;
-        public Func<T> Source
+        private Func<IClass> _source;
+        public Func<IClass> Source
         {
             get => _source;
             set
@@ -20,16 +18,16 @@ namespace FluentGeneration.Implementations.Class
             }
         }
 
-        public ClassType(IClassName<T> className)
+        public ClassType(IClassName className)
         {
             _className = className;
         }
 
-        public IClassName<T> WithClassType(ClassType classType)
+        public IClassName WithClassType(FluentGeneration.Shared.ClassType classType)
         {
-            if (classType != ClassType.Standard)
+            if (classType != FluentGeneration.Shared.ClassType.Standard)
             {
-                Source.Invoke().Generator.AddGenerationData(typeof(IClassType<>), classType);
+                Source.Invoke().Generator.AddGenerationData(typeof(IClassType), classType);
             }
 
             return _className;

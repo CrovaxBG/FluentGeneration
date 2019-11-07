@@ -5,13 +5,12 @@ using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Interface
 {
-    public class InterfaceGenericArguments<T> : IInterfaceGenericArguments<T>
-        where T : IGeneratedObject
+    public class InterfaceGenericArguments : IInterfaceGenericArguments
     {
-        private readonly IInterfaceGenericArgumentsConstraints<T> _interfaceGenericArgumentsConstraints;
+        private readonly IInterfaceGenericArgumentsConstraints _interfaceGenericArgumentsConstraints;
 
-        private Func<T> _source;
-        public Func<T> Source
+        private Func<IInterface> _source;
+        public Func<IInterface> Source
         {
             get => _source;
             set
@@ -21,16 +20,16 @@ namespace FluentGeneration.Implementations.Interface
             }
         }
 
-        public InterfaceGenericArguments(IInterfaceGenericArgumentsConstraints<T> interfaceGenericArgumentsConstraints)
+        public InterfaceGenericArguments(IInterfaceGenericArgumentsConstraints interfaceGenericArgumentsConstraints)
         {
             _interfaceGenericArgumentsConstraints = interfaceGenericArgumentsConstraints;
         }
 
-        public IInterfaceGenericArgumentsConstraints<T> WithGenericArguments(params IGenericArgument[] arguments)
+        public IInterfaceGenericArgumentsConstraints WithGenericArguments(params IGenericArgument[] arguments)
         {
             if (arguments.Any())
             {
-                Source.Invoke().Generator.AddGenerationData(typeof(IInterfaceGenericArguments<>), arguments);
+                Source.Invoke().Generator.AddGenerationData(typeof(IInterfaceGenericArguments), arguments);
             }
 
             return _interfaceGenericArgumentsConstraints;

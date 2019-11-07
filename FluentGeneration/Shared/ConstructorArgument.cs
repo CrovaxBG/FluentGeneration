@@ -1,4 +1,6 @@
-﻿namespace FluentGeneration.Resolvers
+﻿using FluentGeneration.Resolvers;
+
+namespace FluentGeneration.Shared
 {
     public class ConstructorArgument : IConstructorArgument
     {

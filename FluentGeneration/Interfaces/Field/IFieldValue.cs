@@ -1,11 +1,11 @@
-﻿using FluentGeneration.Shared;
+﻿using FluentGeneration.Interfaces.Class;
+using FluentGeneration.Shared;
 
 namespace FluentGeneration.Interfaces.Field
 {
-    public interface IFieldValue<T> : IFluentLink<T>
-        where T : IGeneratedObject
+    public interface IFieldValue : IFluentLink<IField>
     {
-        T WithNoValue();
-        T WithValue(object value);
+        IField WithNoValue();
+        IField WithValue(object value);
     }
 }

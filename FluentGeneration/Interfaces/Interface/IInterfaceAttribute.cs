@@ -3,10 +3,9 @@ using FluentGeneration.Shared;
 
 namespace FluentGeneration.Interfaces.Interface
 {
-    public interface IInterfaceAttribute<T> : IFluentLink<T>
-        where T : IGeneratedObject
+    public interface IInterfaceAttribute : IFluentLink<IInterface>
     {
-        IInterfaceGenericArguments<T> WithAttributes(params Type[] attributeTypes);
-        IInterfaceGenericArguments<T> WithAttributes(string literal);
+        IInterfaceGenericArguments WithAttributes(params Type[] attributeTypes);
+        IInterfaceGenericArguments WithAttributes(string literal);
     }
 }

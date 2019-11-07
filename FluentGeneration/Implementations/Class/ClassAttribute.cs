@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Linq;
 using FluentGeneration.Interfaces.Class;
-using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Class
 {
-    public class ClassAttribute<T> : IClassAttribute<T>
-        where T : IGeneratedObject
+    public class ClassAttribute : IClassAttribute
     {
-        private readonly IClassGenericArguments<T> _classGenericArguments;
+        private readonly IClassGenericArguments _classGenericArguments;
 
-        private Func<T> _source;
-        public Func<T> Source
+        private Func<IClass> _source;
+        public Func<IClass> Source
         {
             get => _source;
             set
@@ -21,26 +19,26 @@ namespace FluentGeneration.Implementations.Class
             }
         }
 
-        public ClassAttribute(IClassGenericArguments<T> classGenericArguments)
+        public ClassAttribute(IClassGenericArguments classGenericArguments)
         {
             _classGenericArguments = classGenericArguments;
         }
 
-        public IClassGenericArguments<T> WithAttributes(params Type[] attributeTypes)
+        public IClassGenericArguments WithAttributes(params Type[] attributeTypes)
         {
             if (attributeTypes.Any())
             {
-                Source.Invoke().Generator.AddGenerationData(typeof(IClassAttribute<>), attributeTypes);
+                Source.Invoke().Generator.AddGenerationData(typeof(IClassAttribute), attributeTypes);
             }
 
             return _classGenericArguments;
         }
 
-        public IClassGenericArguments<T> WithAttributes(string literal)
+        public IClassGenericArguments WithAttributes(string literal)
         {
             if (!string.IsNullOrEmpty(literal))
             {
-                Source.Invoke().Generator.AddGenerationData(typeof(IClassAttribute<>), literal);
+                Source.Invoke().Generator.AddGenerationData(typeof(IClassAttribute), literal);
             }
 
             return _classGenericArguments;

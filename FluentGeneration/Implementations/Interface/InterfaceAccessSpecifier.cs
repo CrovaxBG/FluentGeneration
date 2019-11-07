@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using FluentGeneration.Interfaces.Interface;
 using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Interface
 {
-    public class InterfaceAccessSpecifier<T> : IInterfaceAccessSpecifier<T>
-        where T : IGeneratedObject
+    public class InterfaceAccessSpecifier : IInterfaceAccessSpecifier
     {
-        private readonly IInterfaceName<T> _interfaceName;
+        private readonly IInterfaceName _interfaceName;
 
-        private Func<T> _source;
-        public Func<T> Source
+        private Func<IInterface> _source;
+        public Func<IInterface> Source
         {
             get => _source;
             set
@@ -22,16 +19,16 @@ namespace FluentGeneration.Implementations.Interface
             }
         }
 
-        public InterfaceAccessSpecifier(IInterfaceName<T> interfaceName)
+        public InterfaceAccessSpecifier(IInterfaceName interfaceName)
         {
             _interfaceName = interfaceName;
         }
 
-        public IInterfaceName<T> WithAccessSpecifier(AccessSpecifier accessSpecifier)
+        public IInterfaceName WithAccessSpecifier(AccessSpecifier accessSpecifier)
         {
             if (accessSpecifier != AccessSpecifier.None)
             {
-                Source.Invoke().Generator.AddGenerationData(typeof(IInterfaceAccessSpecifier<>), accessSpecifier);
+                Source.Invoke().Generator.AddGenerationData(typeof(IInterfaceAccessSpecifier), accessSpecifier);
             }
 
             return _interfaceName;

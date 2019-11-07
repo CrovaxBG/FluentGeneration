@@ -5,13 +5,12 @@ using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Interface
 {
-    public class InterfaceGenericArgumentsConstraints<T> : IInterfaceGenericArgumentsConstraints<T>
-        where T : IGeneratedObject
+    public class InterfaceGenericArgumentsConstraints : IInterfaceGenericArgumentsConstraints
     {
-        private readonly IInterfaceInheritance<T> _interfaceInheritance;
+        private readonly IInterfaceInheritance _interfaceInheritance;
 
-        private Func<T> _source;
-        public Func<T> Source
+        private Func<IInterface> _source;
+        public Func<IInterface> Source
         {
             get => _source;
             set
@@ -21,26 +20,26 @@ namespace FluentGeneration.Implementations.Interface
             }
         }
 
-        public InterfaceGenericArgumentsConstraints(IInterfaceInheritance<T> interfaceInheritance)
+        public InterfaceGenericArgumentsConstraints(IInterfaceInheritance interfaceInheritance)
         {
             _interfaceInheritance = interfaceInheritance;
         }
 
-        public IInterfaceInheritance<T> WithGenericArgumentConstraint(params IGenericArgumentConstraint[] constraints)
+        public IInterfaceInheritance WithGenericArgumentConstraint(params IGenericArgumentConstraint[] constraints)
         {
             if (constraints.Any())
             {
-                Source.Invoke().Generator.AddGenerationData(typeof(IInterfaceGenericArgumentsConstraints<>), constraints);
+                Source.Invoke().Generator.AddGenerationData(typeof(IInterfaceGenericArgumentsConstraints), constraints);
             }
 
             return _interfaceInheritance;
         }
 
-        public IInterfaceInheritance<T> WithGenericArgumentConstraint(string literal)
+        public IInterfaceInheritance WithGenericArgumentConstraint(string literal)
         {
             if (!string.IsNullOrEmpty(literal))
             {
-                Source.Invoke().Generator.AddGenerationData(typeof(IInterfaceGenericArgumentsConstraints<>), literal);
+                Source.Invoke().Generator.AddGenerationData(typeof(IInterfaceGenericArgumentsConstraints), literal);
             }
 
             return _interfaceInheritance;

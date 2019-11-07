@@ -3,10 +3,9 @@ using FluentGeneration.Shared;
 
 namespace FluentGeneration.Interfaces.Class
 {
-    public interface IClassInheritance<T> : IFluentLink<T>
-        where T : IGeneratedObject
+    public interface IClassInheritance : IFluentLink<IClass>
     {
-        IClassBody<T> WithInheritance(params Type[] types);
-        IClassBody<T> WithInheritance(string literal);
+        IClassBody WithInheritance(params Type[] types);
+        IClassBody WithInheritance(string literal);
     }
 }

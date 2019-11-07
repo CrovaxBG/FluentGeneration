@@ -2,9 +2,8 @@
 
 namespace FluentGeneration.Interfaces.Interface
 {
-    public interface IInterfaceName<T> : IFluentLink<T>
-        where T : IGeneratedObject
+    public interface IInterfaceName : IFluentLink<IInterface>
     {
-        IInterfaceAttribute<T> WithName(string name);
+        IInterfaceAttribute WithName(string name);
     }
 }

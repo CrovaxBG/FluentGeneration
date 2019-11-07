@@ -1,16 +1,15 @@
 ﻿using System;
+using FluentGeneration.Interfaces.Class;
 using FluentGeneration.Interfaces.Field;
-using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Field
 {
-    public class FieldType<T> : IFieldType<T>
-        where T : IGeneratedObject
+    public class FieldType : IFieldType
     {
-        private readonly IFieldName<T> _fieldName;
+        private readonly IFieldName _fieldName;
 
-        private Func<T> _source;
-        public Func<T> Source
+        private Func<IField> _source;
+        public Func<IField> Source
         {
             get => _source;
             set
@@ -20,20 +19,20 @@ namespace FluentGeneration.Implementations.Field
             }
         }
 
-        public FieldType(IFieldName<T> fieldName)
+        public FieldType(IFieldName fieldName)
         {
             _fieldName = fieldName;
         }
 
-        public IFieldName<T> WithType(Type type)
+        public IFieldName WithType(Type type)
         {
-            Source.Invoke().Generator.AddGenerationData(typeof(IFieldType<>), type);
+            Source.Invoke().Generator.AddGenerationData(typeof(IFieldType), type);
             return _fieldName;
         }
 
-        public IFieldName<T> WithType(string literal)
+        public IFieldName WithType(string literal)
         {
-            Source.Invoke().Generator.AddGenerationData(typeof(IFieldType<>), literal);
+            Source.Invoke().Generator.AddGenerationData(typeof(IFieldType), literal);
             return _fieldName;
         }
     }

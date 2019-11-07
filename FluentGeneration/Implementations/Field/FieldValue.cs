@@ -1,23 +1,22 @@
 ﻿using System;
+using FluentGeneration.Interfaces.Class;
 using FluentGeneration.Interfaces.Field;
-using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Field
 {
-    public class FieldValue<T> : IFieldValue<T>
-        where T : IGeneratedObject
+    public class FieldValue : IFieldValue
     {
-        public Func<T> Source { get; set; }
+        public Func<IField> Source { get; set; }
 
-        public T WithNoValue()
+        public IField WithNoValue()
         {
             return Source.Invoke();
         }
 
-        public T WithValue(object value)
+        public IField WithValue(object value)
         {
             var source = Source.Invoke();
-            source.Generator.AddGenerationData(typeof(IFieldValue<>), value);
+            source.Generator.AddGenerationData(typeof(IFieldValue), value);
             return source;
         }
     }

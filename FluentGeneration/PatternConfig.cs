@@ -3,8 +3,8 @@
     public static class PatternConfig
     {
         public static string FieldPattern { get; set; } = @"
-{[IFieldAttribute<>]
-}{[IFieldAccessSpecifier<>]} {[IFieldAccessModifier<>]} {[IFieldType<>]} {[IFieldName<>]} {= [IFieldValue<>]};";
+{[IFieldAttribute]
+}{[IFieldAccessSpecifier]} {[IFieldAccessModifier]} {[IFieldType]} {[IFieldName]} {= [IFieldValue]};";
 
         public static string PropertyPattern { get; set; } = @"
 {[IPropertyAttribute<>]
@@ -20,21 +20,21 @@
     [IMethodGenericArgumentsConstraints<>]}{[IMethodBody<>]}";
 
         public static string ClassPattern { get; set; } = @"
-{[IClassAttribute<>]
-}{[IClassAccessSpecifier<>]} {[IClassType<>] }class {[IClassName<>]}{<[IClassGenericArguments<>]>} {: [IClassInheritance<>]} {
-    [IClassGenericArgumentsConstraints<>]}
-{[IClassBody<>]}
+{[IClassAttribute]
+}{[IClassAccessSpecifier]} {[IClassType] }class {[IClassName]}{<[IClassGenericArguments]>} {: [IClassInheritance]} {
+    [IClassGenericArgumentsConstraints]}
+{[IClassBody]}
 ";
 
         public static string InterfacePattern { get; set; } = @"
-{[IInterfaceAttribute<>]
-}{[IInterfaceAccessSpecifier<>]} interface {[IInterfaceName<>]}{<[IInterfaceGenericArguments<>]>} {: [IInterfaceInheritance<>]} {
-    [IInterfaceGenericArgumentsConstraints<>]}
-{[IInterfaceBody<>]}
+{[IInterfaceAttribute]
+}{[IInterfaceAccessSpecifier]} interface {[IInterfaceName]}{<[IInterfaceGenericArguments]>} {: [IInterfaceInheritance]} {
+    [IInterfaceGenericArgumentsConstraints]}
+{[IInterfaceBody]}
 ";
 
         public static string ClassBodyPattern { get; set; } = @"{
-{[IField<>]}{[IProperty<>]}{[IMethod<>]}
+{[IField]}{[IProperty<>]}{[IMethod<>]}
 }";
 
         public static string InterfaceBodyPattern { get; set; } = @"{

@@ -1,16 +1,14 @@
 ﻿using System;
 using FluentGeneration.Interfaces.Interface;
-using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Interface
 {
-    public class InterfaceName<T> : IInterfaceName<T>
-        where T : IGeneratedObject
+    public class InterfaceName : IInterfaceName
     {
-        private readonly IInterfaceAttribute<T> _interfaceAttribute;
+        private readonly IInterfaceAttribute _interfaceAttribute;
 
-        private Func<T> _source;
-        public Func<T> Source
+        private Func<IInterface> _source;
+        public Func<IInterface> Source
         {
             get => _source;
             set
@@ -20,14 +18,14 @@ namespace FluentGeneration.Implementations.Interface
             }
         }
 
-        public InterfaceName(IInterfaceAttribute<T> interfaceAttribute)
+        public InterfaceName(IInterfaceAttribute interfaceAttribute)
         {
             _interfaceAttribute = interfaceAttribute;
         }
 
-        public IInterfaceAttribute<T> WithName(string name)
+        public IInterfaceAttribute WithName(string name)
         {
-            Source.Invoke().Generator.AddGenerationData(typeof(IInterfaceName<>), name);
+            Source.Invoke().Generator.AddGenerationData(typeof(IInterfaceName), name);
             return _interfaceAttribute;
         }
     }

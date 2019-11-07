@@ -4,13 +4,12 @@ using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Field
 {
-    public class FieldAccessModifier<T> : IFieldAccessModifier<T>
-        where T : IGeneratedObject
+    public class FieldAccessModifier : IFieldAccessModifier
     {
-        private readonly IFieldType<T> _fieldType;
+        private readonly IFieldType _fieldType;
 
-        private Func<T> _source;
-        public Func<T> Source
+        private Func<IField> _source;
+        public Func<IField> Source
         {
             get => _source;
             set
@@ -20,16 +19,16 @@ namespace FluentGeneration.Implementations.Field
             }
         }
 
-        public FieldAccessModifier(IFieldType<T> fieldType)
+        public FieldAccessModifier(IFieldType fieldType)
         {
             _fieldType = fieldType;
         }
 
-        public IFieldType<T> WithAccessModifier(AccessModifiers accessModifiers)
+        public IFieldType WithAccessModifier(AccessModifiers accessModifiers)
         {
             if (accessModifiers != AccessModifiers.None)
             {
-                Source.Invoke().Generator.AddGenerationData(typeof(IFieldAccessModifier<>), accessModifiers);
+                Source.Invoke().Generator.AddGenerationData(typeof(IFieldAccessModifier), accessModifiers);
             }
             return _fieldType;
         }

@@ -1,16 +1,16 @@
 ﻿using System;
+using FluentGeneration.Interfaces.Class;
 using FluentGeneration.Interfaces.Field;
 using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Field
 {
-    public class FieldAccessSpecifier<T> : IFieldAccessSpecifier<T>
-        where T : IGeneratedObject
+    public class FieldAccessSpecifier : IFieldAccessSpecifier
     {
-        private readonly IFieldAccessModifier<T> _fieldAccessModifier;
+        private readonly IFieldAccessModifier _fieldAccessModifier;
 
-        private Func<T> _source;
-        public Func<T> Source
+        private Func<IField> _source;
+        public Func<IField> Source
         {
             get => _source;
             set
@@ -20,16 +20,16 @@ namespace FluentGeneration.Implementations.Field
             }
         }
 
-        public FieldAccessSpecifier(IFieldAccessModifier<T> fieldAccessModifier)
+        public FieldAccessSpecifier(IFieldAccessModifier fieldAccessModifier)
         {
             _fieldAccessModifier = fieldAccessModifier;
         }
 
-        public IFieldAccessModifier<T> WithAccessSpecifier(AccessSpecifier accessSpecifier)
+        public IFieldAccessModifier WithAccessSpecifier(AccessSpecifier accessSpecifier)
         {
             if (accessSpecifier != AccessSpecifier.None)
             {
-                Source.Invoke().Generator.AddGenerationData(typeof(IFieldAccessSpecifier<>), accessSpecifier);
+                Source.Invoke().Generator.AddGenerationData(typeof(IFieldAccessSpecifier), accessSpecifier);
             }
             return _fieldAccessModifier;
         }

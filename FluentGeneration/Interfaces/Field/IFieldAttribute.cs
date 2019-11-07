@@ -1,12 +1,12 @@
 ﻿using System;
+using FluentGeneration.Interfaces.Class;
 using FluentGeneration.Shared;
 
 namespace FluentGeneration.Interfaces.Field
 {
-    public interface IFieldAttribute<T> : IFluentLink<T>
-        where T : IGeneratedObject
+    public interface IFieldAttribute : IFluentLink<IField>
     {
-        IFieldValue<T> WithAttributes(params Type[] attributeTypes);
-        IFieldValue<T> WithAttributes(string literal);
+        IFieldValue WithAttributes(params Type[] attributeTypes);
+        IFieldValue WithAttributes(string literal);
     }
 }

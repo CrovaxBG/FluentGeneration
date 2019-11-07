@@ -1,20 +1,19 @@
 ﻿using System;
 using FluentGeneration.Generators;
 using FluentGeneration.Interfaces.Class;
-using FluentGeneration.Interfaces.Field;
 
 namespace FluentGeneration.Implementations.Class
 {
     public class Class : IClass
     {
-        private readonly IClassAccessSpecifier<IClass> _accessSpecifier;
+        private readonly IClassAccessSpecifier _accessSpecifier;
 
         public IGenerator Generator { get; }
         public string Data { get; private set; }
 
         public Func<IFile> Source { get; set; }
 
-        public Class(IGenerator codeGenerator, IClassAccessSpecifier<IClass> accessSpecifier)
+        public Class(IGenerator codeGenerator, IClassAccessSpecifier accessSpecifier)
         {
             Generator = codeGenerator;
             _accessSpecifier = accessSpecifier;
@@ -35,7 +34,7 @@ namespace FluentGeneration.Implementations.Class
             return Source.Invoke();
         }
 
-        public IClassAccessSpecifier<IClass> Begin()
+        public IClassAccessSpecifier Begin()
         {
             return _accessSpecifier;
         }

@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Linq;
 using FluentGeneration.Interfaces.Class;
-using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Class
 {
-    public class ClassInheritance<T> : IClassInheritance<T>
-        where T : IGeneratedObject
+    public class ClassInheritance : IClassInheritance
     {
-        private readonly IClassBody<T> _classBody;
+        private readonly IClassBody _classBody;
 
-        private Func<T> _source;
-        public Func<T> Source
+        private Func<IClass> _source;
+        public Func<IClass> Source
         {
             get => _source;
             set
@@ -21,25 +19,25 @@ namespace FluentGeneration.Implementations.Class
             }
         }
 
-        public ClassInheritance(IClassBody<T> classBody)
+        public ClassInheritance(IClassBody classBody)
         {
             _classBody = classBody;
         }
 
-        public IClassBody<T> WithInheritance(params Type[] types)
+        public IClassBody WithInheritance(params Type[] types)
         {
             if (types.Any())
             {
-                Source.Invoke().Generator.AddGenerationData(typeof(IClassInheritance<>), types);
+                Source.Invoke().Generator.AddGenerationData(typeof(IClassInheritance), types);
             }
             return _classBody;
         }
 
-        public IClassBody<T> WithInheritance(string literal)
+        public IClassBody WithInheritance(string literal)
         {
             if (!string.IsNullOrEmpty(literal))
             {
-                Source.Invoke().Generator.AddGenerationData(typeof(IClassInheritance<>), literal);
+                Source.Invoke().Generator.AddGenerationData(typeof(IClassInheritance), literal);
             }
 
             return _classBody;

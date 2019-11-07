@@ -4,10 +4,9 @@ using FluentGeneration.Shared;
 
 namespace FluentGeneration.Interfaces.Interface
 {
-    public interface IInterfaceBody<T> : IGeneratedObject, IFluentLink<T>, IEndable<T>
-        where T : IGeneratedObject
+    public interface IInterfaceBody : IGeneratedObject, IFluentLink<IInterface>, IEndable<IInterface>
     {
-        IProperty<IInterfaceBody<T>> WithProperty();
-        IMethod<IInterfaceBody<T>> WithMethod();
+        IProperty<IInterfaceBody> WithProperty();
+        IMethod<IInterfaceBody> WithMethod();
     }
 }

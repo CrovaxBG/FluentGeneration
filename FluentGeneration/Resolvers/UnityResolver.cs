@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FluentGeneration.Shared;
 using Unity;
 using Unity.Resolution;
 

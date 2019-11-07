@@ -4,13 +4,12 @@ using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Class
 {
-    public class ClassAccessSpecifier<T> : IClassAccessSpecifier<T>
-        where T : IGeneratedObject
+    public class ClassAccessSpecifier : IClassAccessSpecifier
     {
-        private readonly IClassType<T> _classType;
+        private readonly IClassType _classType;
 
-        private Func<T> _source;
-        public Func<T> Source
+        private Func<IClass> _source;
+        public Func<IClass> Source
         {
             get => _source;
             set
@@ -20,16 +19,16 @@ namespace FluentGeneration.Implementations.Class
             }
         }
 
-        public ClassAccessSpecifier(IClassType<T> classType)
+        public ClassAccessSpecifier(IClassType classType)
         {
             _classType = classType;
         }
 
-        public IClassType<T> WithAccessSpecifier(AccessSpecifier accessSpecifier)
+        public IClassType WithAccessSpecifier(AccessSpecifier accessSpecifier)
         {
             if (accessSpecifier != AccessSpecifier.None)
             {
-                Source.Invoke().Generator.AddGenerationData(typeof(IClassAccessSpecifier<>), accessSpecifier);
+                Source.Invoke().Generator.AddGenerationData(typeof(IClassAccessSpecifier), accessSpecifier);
             }
 
             return _classType;

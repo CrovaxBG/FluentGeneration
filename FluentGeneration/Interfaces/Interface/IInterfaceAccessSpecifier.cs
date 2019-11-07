@@ -2,9 +2,8 @@
 
 namespace FluentGeneration.Interfaces.Interface
 {
-    public interface IInterfaceAccessSpecifier<T> : IFluentLink<T>
-        where T : IGeneratedObject
+    public interface IInterfaceAccessSpecifier : IFluentLink<IInterface>
     {
-        IInterfaceName<T> WithAccessSpecifier(AccessSpecifier accessSpecifier);
+        IInterfaceName WithAccessSpecifier(AccessSpecifier accessSpecifier);
     }
 }

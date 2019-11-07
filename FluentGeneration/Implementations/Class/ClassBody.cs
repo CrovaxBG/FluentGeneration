@@ -9,43 +9,42 @@ using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Class
 {
-    public class ClassBody<T> : IClassBody<T>
-        where T : IGeneratedObject
+    public class ClassBody : IClassBody
     {
-        private readonly IFactory<IFluentLink<IClassBody<T>>> _factory;
+        private readonly IFactory<IFluentLink<IClassBody>> _factory;
 
         public IGenerator Generator { get; }
         public string Data { get; private set; }
 
-        public Func<T> Source { get; set; }
+        public Func<IClass> Source { get; set; }
 
-        public ClassBody(IGenerator generator, IFactory<IFluentLink<IClassBody<T>>> factory)
+        public ClassBody(IGenerator generator, IFactory<IFluentLink<IClassBody>> factory)
         {
             Generator = generator;
             _factory = factory;
         }
 
-        public T End()
+        public IClass End()
         {
             Data = Generator.Generate(PatternConfig.ClassBodyPattern);
-            Source.Invoke().Generator.AddGenerationData(typeof(IClassBody<>), Data);
+            Source.Invoke().Generator.AddGenerationData(typeof(IClassBody), Data);
             Console.WriteLine(Data);
             return Source.Invoke();
         }
 
-        public IField<IClassBody<T>> WithField()
+        public IField WithField()
         {
-            return WithObject<IField<IClassBody<T>>>();
+            return WithObject<IField>();
         }
 
-        public IProperty<IClassBody<T>> WithProperty()
+        public IProperty<IClassBody> WithProperty()
         {
-            return WithObject<IProperty<IClassBody<T>>>();
+            return WithObject<IProperty<IClassBody>>();
         }
 
-        public IMethod<IClassBody<T>> WithMethod()
+        public IMethod<IClassBody> WithMethod()
         {
-            return WithObject<IMethod<IClassBody<T>>>();
+            return WithObject<IMethod<IClassBody>>();
         }
 
         public TObject WithObject<TObject>()

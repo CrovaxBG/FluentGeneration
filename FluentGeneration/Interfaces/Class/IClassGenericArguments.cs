@@ -2,9 +2,8 @@
 
 namespace FluentGeneration.Interfaces.Class
 {
-    public interface IClassGenericArguments<T> : IFluentLink<T>
-        where T : IGeneratedObject
+    public interface IClassGenericArguments : IFluentLink<IClass>
     {
-        IClassGenericArgumentsConstraints<T> WithGenericArguments(params IGenericArgument[] arguments);
+        IClassGenericArgumentsConstraints WithGenericArguments(params IGenericArgument[] arguments);
     }
 }

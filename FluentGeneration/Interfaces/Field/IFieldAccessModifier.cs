@@ -1,10 +1,10 @@
-﻿using FluentGeneration.Shared;
+﻿using FluentGeneration.Interfaces.Class;
+using FluentGeneration.Shared;
 
 namespace FluentGeneration.Interfaces.Field
 {
-    public interface IFieldAccessModifier<T> : IFluentLink<T>
-        where T : IGeneratedObject
+    public interface IFieldAccessModifier : IFluentLink<IField>
     {
-        IFieldType<T> WithAccessModifier(AccessModifiers accessModifier);
+        IFieldType WithAccessModifier(AccessModifiers accessModifier);
     }
 }

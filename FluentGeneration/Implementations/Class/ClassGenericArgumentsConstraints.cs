@@ -5,13 +5,12 @@ using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Class
 {
-    public class ClassGenericArgumentsConstraints<T> : IClassGenericArgumentsConstraints<T>
-        where T : IGeneratedObject
+    public class ClassGenericArgumentsConstraints : IClassGenericArgumentsConstraints
     {
-        private readonly IClassInheritance<T> _classInheritance;
+        private readonly IClassInheritance _classInheritance;
 
-        private Func<T> _source;
-        public Func<T> Source
+        private Func<IClass> _source;
+        public Func<IClass> Source
         {
             get => _source;
             set
@@ -21,25 +20,25 @@ namespace FluentGeneration.Implementations.Class
             }
         }
 
-        public ClassGenericArgumentsConstraints(IClassInheritance<T> classInheritance)
+        public ClassGenericArgumentsConstraints(IClassInheritance classInheritance)
         {
             _classInheritance = classInheritance;
         }
 
-        public IClassInheritance<T> WithGenericArgumentConstraint(params IGenericArgumentConstraint[] constraints)
+        public IClassInheritance WithGenericArgumentConstraint(params IGenericArgumentConstraint[] constraints)
         {
             if (constraints.Any())
             {
-                Source.Invoke().Generator.AddGenerationData(typeof(IClassGenericArgumentsConstraints<>), constraints);
+                Source.Invoke().Generator.AddGenerationData(typeof(IClassGenericArgumentsConstraints), constraints);
             }
             return _classInheritance;
         }
 
-        public IClassInheritance<T> WithGenericArgumentConstraint(string literal)
+        public IClassInheritance WithGenericArgumentConstraint(string literal)
         {
             if (!string.IsNullOrEmpty(literal))
             {
-                Source.Invoke().Generator.AddGenerationData(typeof(IClassGenericArgumentsConstraints<>), literal);
+                Source.Invoke().Generator.AddGenerationData(typeof(IClassGenericArgumentsConstraints), literal);
             }
 
             return _classInheritance;

@@ -7,14 +7,14 @@ namespace FluentGeneration.Implementations.Interface
 {
     public class Interface : IInterface
     {
-        private readonly IInterfaceAccessSpecifier<IInterface> _accessSpecifier;
+        private readonly IInterfaceAccessSpecifier _accessSpecifier;
 
         public IGenerator Generator { get; }
         public string Data { get; private set; }
 
         public Func<IFile> Source { get; set; }
 
-        public Interface(IGenerator codeGenerator, IInterfaceAccessSpecifier<IInterface> accessSpecifier)
+        public Interface(IGenerator codeGenerator, IInterfaceAccessSpecifier accessSpecifier)
         {
             Generator = codeGenerator;
             _accessSpecifier = accessSpecifier;
@@ -35,7 +35,7 @@ namespace FluentGeneration.Implementations.Interface
             return Source.Invoke();
         }
 
-        public IInterfaceAccessSpecifier<IInterface> Begin()
+        public IInterfaceAccessSpecifier Begin()
         {
             return _accessSpecifier;
         }

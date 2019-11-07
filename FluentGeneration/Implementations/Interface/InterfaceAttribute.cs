@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Linq;
 using FluentGeneration.Interfaces.Interface;
-using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Interface
 {
-    public class InterfaceAttribute<T> : IInterfaceAttribute<T>
-        where T : IGeneratedObject
+    public class InterfaceAttribute : IInterfaceAttribute
     {
-        private readonly IInterfaceGenericArguments<T> _interfaceGenericArguments;
+        private readonly IInterfaceGenericArguments _interfaceGenericArguments;
 
-        private Func<T> _source;
-        public Func<T> Source
+        private Func<IInterface> _source;
+        public Func<IInterface> Source
         {
             get => _source;
             set
@@ -21,26 +19,26 @@ namespace FluentGeneration.Implementations.Interface
             }
         }
 
-        public InterfaceAttribute(IInterfaceGenericArguments<T> interfaceGenericArguments)
+        public InterfaceAttribute(IInterfaceGenericArguments interfaceGenericArguments)
         {
             _interfaceGenericArguments = interfaceGenericArguments;
         }
 
-        public IInterfaceGenericArguments<T> WithAttributes(params Type[] attributeTypes)
+        public IInterfaceGenericArguments WithAttributes(params Type[] attributeTypes)
         {
             if (attributeTypes.Any())
             {
-                Source.Invoke().Generator.AddGenerationData(typeof(IInterfaceAttribute<>), attributeTypes);
+                Source.Invoke().Generator.AddGenerationData(typeof(IInterfaceAttribute), attributeTypes);
             }
 
             return _interfaceGenericArguments;
         }
 
-        public IInterfaceGenericArguments<T> WithAttributes(string literal)
+        public IInterfaceGenericArguments WithAttributes(string literal)
         {
             if (!string.IsNullOrEmpty(literal))
             {
-                Source.Invoke().Generator.AddGenerationData(typeof(IInterfaceAttribute<>), literal);
+                Source.Invoke().Generator.AddGenerationData(typeof(IInterfaceAttribute), literal);
             }
 
             return _interfaceGenericArguments;

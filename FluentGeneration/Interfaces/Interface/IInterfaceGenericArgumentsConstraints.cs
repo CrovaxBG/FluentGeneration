@@ -2,10 +2,9 @@
 
 namespace FluentGeneration.Interfaces.Interface
 {
-    public interface IInterfaceGenericArgumentsConstraints<T> : IFluentLink<T>
-        where T : IGeneratedObject
+    public interface IInterfaceGenericArgumentsConstraints : IFluentLink<IInterface>
     {
-        IInterfaceInheritance<T> WithGenericArgumentConstraint(params IGenericArgumentConstraint[] constraints);
-        IInterfaceInheritance<T> WithGenericArgumentConstraint(string literal);
+        IInterfaceInheritance WithGenericArgumentConstraint(params IGenericArgumentConstraint[] constraints);
+        IInterfaceInheritance WithGenericArgumentConstraint(string literal);
     }
 }

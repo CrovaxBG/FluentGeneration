@@ -1,35 +1,34 @@
 ﻿using System;
 using FluentGeneration.Generators;
+using FluentGeneration.Interfaces.Class;
 using FluentGeneration.Interfaces.Field;
-using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Field
 {
-    public class Field<T> : IField<T>
-        where T : IGeneratedObject
+    public class Field : IField
     {
         public IGenerator Generator { get; }
         public string Data { get; private set; }
-        public Func<T> Source { get; set; }
+        public Func<IClassBody> Source { get; set; }
 
-        private readonly IFieldAccessSpecifier<IField<T>> _accessSpecifier;
+        private readonly IFieldAccessSpecifier _accessSpecifier;
 
-        public Field(IGenerator generator, IFieldAccessSpecifier<IField<T>> accessSpecifier)
+        public Field(IGenerator generator, IFieldAccessSpecifier accessSpecifier)
         {
             Generator = generator;
             _accessSpecifier = accessSpecifier;
             _accessSpecifier.Source = () => this;
         }
 
-        public IFieldAccessSpecifier<IField<T>> Begin()
+        public IFieldAccessSpecifier Begin()
         {
             return _accessSpecifier;
         }
 
-        public T End()
+        public IClassBody End()
         {
             Data = Generator.Generate(PatternConfig.FieldPattern);
-            Source.Invoke().Generator.AddGenerationData(typeof(IField<>), Data);
+            Source.Invoke().Generator.AddGenerationData(typeof(IField), Data);
             Console.WriteLine(Data);
             return Source.Invoke();
         }
