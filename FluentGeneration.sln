@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentGeneration", "FluentGeneration\FluentGeneration.csproj", "{EA532E82-4DDC-442D-8F0B-5EBC98A0C1DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentGenerationExecutable", "FluentGenerationExecutable\FluentGenerationExecutable.csproj", "{BFAC5154-5796-453D-9E53-710EBE2CF3DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentGenerationExecutable", "FluentGenerationExecutable\FluentGenerationExecutable.csproj", "{BFAC5154-5796-453D-9E53-710EBE2CF3DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentGeneration.Tests", "FluentGeneration.Tests\FluentGeneration.Tests.csproj", "{51C86F4B-1390-48DD-9ED9-088BCB8833C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{BFAC5154-5796-453D-9E53-710EBE2CF3DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFAC5154-5796-453D-9E53-710EBE2CF3DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFAC5154-5796-453D-9E53-710EBE2CF3DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51C86F4B-1390-48DD-9ED9-088BCB8833C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51C86F4B-1390-48DD-9ED9-088BCB8833C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51C86F4B-1390-48DD-9ED9-088BCB8833C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51C86F4B-1390-48DD-9ED9-088BCB8833C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
