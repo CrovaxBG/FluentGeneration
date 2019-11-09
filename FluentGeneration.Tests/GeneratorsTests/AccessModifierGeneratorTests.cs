@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using FluentGeneration.Generators;
 using NUnit.Framework;
 using FluentGeneration.Shared;
@@ -18,7 +16,39 @@ namespace FluentGeneration.Tests.GeneratorsTests
         public string SingleAccessModifierConvertTest(AccessModifiers accessModifiers)
         {
             var generator = new AccessModifierGenerator();
-            return generator.Generate(new GenerationData(null, accessModifiers));
+            return generator.Generate(accessModifiers);
+        }
+
+        [TestCase(AccessModifiers.None | AccessModifiers.Const, ExpectedResult = "const")]
+        [TestCase(AccessModifiers.Const | AccessModifiers.Static, ExpectedResult = "const static")]
+        [TestCase(AccessModifiers.Static | AccessModifiers.Readonly, ExpectedResult = "static readonly")]
+        [TestCase(AccessModifiers.Readonly | AccessModifiers.Volatile, ExpectedResult = "readonly volatile")]
+        [TestCase(AccessModifiers.Volatile | AccessModifiers.None, ExpectedResult = "volatile")]
+        public string MultipleAccessModifierConvertTest(AccessModifiers accessModifiers)
+        {
+            var generator = new AccessModifierGenerator();
+            return generator.Generate(accessModifiers);
+        }
+
+        [TestCase(AccessModifiers.None | AccessModifiers.Const | AccessModifiers.Static | AccessModifiers.Readonly | AccessModifiers.Volatile, ExpectedResult = "const static readonly volatile")]
+        public string AllModifiersConvertTest(AccessModifiers accessModifiers)
+        {
+            var generator = new AccessModifierGenerator();
+            return generator.Generate(accessModifiers);
+        }
+
+        [Test]
+        public void NullDataTest()
+        {
+            var generator = new AccessModifierGenerator();
+            Assert.Throws(typeof(ArgumentNullException), () => generator.Generate(null));
+        }
+
+        [Test]
+        public void InvalidDataTypeTest()
+        {
+            var generator = new AccessModifierGenerator();
+            Assert.Throws(typeof(InvalidOperationException), () => generator.Generate("Invalid"));
         }
     }
 }

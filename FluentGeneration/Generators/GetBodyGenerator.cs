@@ -11,11 +11,9 @@ namespace FluentGeneration.Generators
             if (!(data is BodyData bodyData)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!"); }
 
             if (bodyData.IsAuto) { return "get;"; }
+            if (string.IsNullOrEmpty(bodyData.Body)) { throw new InvalidOperationException($"{nameof(bodyData.Body)} contains no data for non-auto get.");}
 
-            return $@"get
-    {{
-       {bodyData.Body}
-    }}";
+            return $@"get {{ {bodyData.Body} }}";
         }
     }
 }

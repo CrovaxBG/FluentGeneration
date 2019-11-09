@@ -12,8 +12,9 @@ namespace FluentGeneration.Generators
             if (data == null) { throw new ArgumentNullException(nameof(data)); }
             if (data is string literal) { return literal; }
             if (!(data is IGenericArgumentConstraint[] arguments)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!"); }
-
-            return string.Join(Environment.NewLine + "".PadRight(4,' '),
+            if(arguments.Any(arg => !arg.Constraints.Any())) { throw new InvalidOperationException($"{nameof(data)} contains arguments without constraints!");}
+            
+            return string.Join(Environment.NewLine,
                 arguments.Select(arg =>
                     $"where {arg.GenericArgumentName} : {string.Join(", ", arg.Constraints.Select(t => t.FormatTypeName()))}"));
         }
