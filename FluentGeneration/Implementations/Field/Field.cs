@@ -29,7 +29,6 @@ namespace FluentGeneration.Implementations.Field
         {
             Data = Generator.Generate(PatternConfig.FieldPattern);
             Source.Invoke().Generator.AddGenerationData(typeof(IField), Data);
-            Console.WriteLine(Data);
             return Source.Invoke();
         }
     }

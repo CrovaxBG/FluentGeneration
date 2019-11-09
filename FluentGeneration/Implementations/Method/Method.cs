@@ -30,7 +30,6 @@ namespace FluentGeneration.Implementations.Method
         {
             Data = Generator.Generate(PatternConfig.MethodPattern);
             Source.Invoke().Generator.AddGenerationData(typeof(IMethod<>), Data);
-            Console.WriteLine(Data);
             return Source.Invoke();
         }
     }

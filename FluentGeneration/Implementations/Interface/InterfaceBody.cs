@@ -8,44 +8,30 @@ using FluentGeneration.Shared;
 
 namespace FluentGeneration.Implementations.Interface
 {
-    public class InterfaceBody : IInterfaceBody
+    public class InterfaceBody : BaseBody<IInterfaceBody, IInterface>,IInterfaceBody
     {
-        private readonly IFactory<IFluentLink<IInterfaceBody>> _factory;
-
-        public IGenerator Generator { get; }
+        IGenerator IGeneratedObject.Generator => base.Generator;
         public string Data { get; private set; }
 
         public Func<IInterface> Source { get; set; }
 
+        protected override Func<IInterfaceBody> GetSource => () => this;
+
         public InterfaceBody(IGenerator generator, IFactory<IFluentLink<IInterfaceBody>> factory)
+            : base(generator, factory)
         {
-            Generator = generator ?? throw new ArgumentNullException(nameof(generator));
-            _factory = factory ?? throw new ArgumentNullException(nameof(factory));
         }
 
         public IInterface End()
         {
             Data = Generator.Generate(PatternConfig.InterfaceBodyPattern);
             Source.Invoke().Generator.AddGenerationData(typeof(IInterfaceBody), Data);
-            Console.WriteLine(Data);
             return Source.Invoke();
         }
 
-        public IProperty<IInterfaceBody> WithProperty()
-        {
-            return WithObject<IProperty<IInterfaceBody>>();
-        }
-
-        public IMethod<IInterfaceBody> WithMethod()
-        {
-            return WithObject<IMethod<IInterfaceBody>>();
-        }
-
-        public TObject WithObject<TObject>()
-        {
-            var instance = _factory.Create(typeof(TObject));
-            instance.Source = () => this;
-            return (TObject)instance;
-        }
+        public IProperty<IInterfaceBody> WithProperty() => WithObject<IProperty<IInterfaceBody>>();
+        public IMethod<IInterfaceBody> WithMethod() => WithObject<IMethod<IInterfaceBody>>();
+        public IInterfaceBody WithProperties(SequenceGenerator<IProperty<IInterfaceBody>> sequenceGenerator) => WithMultipleObjects(sequenceGenerator);
+        public IInterfaceBody WithMethods(SequenceGenerator<IMethod<IInterfaceBody>> sequenceGenerator) => WithMultipleObjects(sequenceGenerator);
     }
 }

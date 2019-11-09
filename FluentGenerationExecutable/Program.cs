@@ -4,9 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using FluentGeneration;
 using FluentGeneration.Interfaces.Class;
+using FluentGeneration.Interfaces.Field;
+using FluentGeneration.Interfaces.Interface;
+using FluentGeneration.Interfaces.Method;
+using FluentGeneration.Interfaces.Property;
 using FluentGeneration.Shared;
 using Unity;
 
@@ -17,15 +22,113 @@ namespace FluentGenerationExecutable
         static void Main(string[] args)
         {
             var path = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\")) + @"\TestFiles\";
+            Stopwatch sw = Stopwatch.StartNew();
+            TestSingleInterfaceWithMultiple(path);
+            sw.Stop();
+            Console.WriteLine(sw.ElapsedMilliseconds);
+            Console.ReadKey();
+        }
 
+        private static void TestSingleClassWithMultiple(string path)
+        {
             new FileBuilder()
                 .DefineFile()
-                .Begin().WithPath(path).WithName("BasicClass")
-                    .WithClass()
+                    .Begin().WithPath(path).WithName("BasicClass")
+                        .WithClass()
                         .Begin()
                             .WithNamespace("first").WithUsingDirectives()
                             .WithAccessSpecifier(AccessSpecifier.None).WithClassType(ClassType.Standard).WithName("BasicClass").WithAttributes()
-                            .WithGenericArguments().WithGenericArgumentConstraint().WithInheritance().End()
+                            .WithGenericArguments().WithGenericArgumentConstraint().WithInheritance()
+                            .WithFields(FieldSequenceGenerator)
+                            .WithProperties(ClassPropertySequenceGenerator)
+                            .WithMethods(ClassMethodSequenceGenerator)
+                        .End()
+                    .End()
+                .End()
+            .End()
+            .Build();
+        }
+
+        private static void TestSingleInterfaceWithMultiple(string path)
+        {
+            new FileBuilder()
+                .DefineFile()
+                    .Begin().WithPath(path).WithName("IBasicInterface")
+                        .WithInterface()
+                        .Begin()
+                            .WithNamespace("first").WithUsingDirectives()
+                            .WithAccessSpecifier(AccessSpecifier.None).WithName("IBasicInterface").WithAttributes()
+                            .WithGenericArguments().WithGenericArgumentConstraint().WithInheritance()
+                            .WithProperties(InterfacePropertySequenceGenerator)
+                            .WithMethods(InterfaceMethodSequenceGenerator)
+                        .End()
+                    .End()
+                .End()
+            .End()
+            .Build();
+        }
+
+        private static IEnumerable<IMethod<IInterfaceBody>> InterfaceMethodSequenceGenerator(Func<IMethod<IInterfaceBody>> value)
+        {
+            return Enumerable.Range(0, 101).Select(i => value.Invoke().Begin()
+                .WithAccessSpecifier(AccessSpecifier.None).WithAccessModifier(AccessModifiers.None)
+                .WithType(typeof(string)).WithName($"Method_{i}").WithAttributes(typeof(PureAttribute))
+                .WithGenericArguments().WithGenericArgumentConstraint()
+                .WithParameters(Parameter.Standard(typeof(IParameter), "parameter"))
+                .WithEmptyBody());
+        }
+
+        private static IEnumerable<IProperty<IInterfaceBody>> InterfacePropertySequenceGenerator(Func<IProperty<IInterfaceBody>> value)
+        {
+            return Enumerable.Range(0, 101).Select(i => value.Invoke().Begin()
+                .WithAccessSpecifier(AccessSpecifier.None).WithAccessModifier(AccessModifiers.None)
+                .WithType(typeof(int)).WithName($"Property_{i}").WithAttributes()
+                .WithGetAccessSpecifier(AccessSpecifier.None).AutoGet()
+                .WithSetAccessSpecifier(AccessSpecifier.None).AutoSet()
+                .WithNoValue());
+        }
+
+        private static IEnumerable<IMethod<IClassBody>> ClassMethodSequenceGenerator(Func<IMethod<IClassBody>> value)
+        {
+            return Enumerable.Range(0, 101).Select(i => value.Invoke().Begin()
+                .WithAccessSpecifier(AccessSpecifier.Public).WithAccessModifier(AccessModifiers.None)
+                .WithType(typeof(string)).WithName($"Method_{i}").WithAttributes(typeof(PureAttribute))
+                .WithGenericArguments().WithGenericArgumentConstraint()
+                .WithParameters(Parameter.Standard(typeof(IParameter), "parameter"))
+                .WithMethodBody($@"return {i}.ToString();"));
+        }
+
+        private static IEnumerable<IProperty<IClassBody>> ClassPropertySequenceGenerator(Func<IProperty<IClassBody>> value)
+        {
+            return Enumerable.Range(0, 101).Select(i => value.Invoke().Begin()
+                .WithAccessSpecifier(AccessSpecifier.Public).WithAccessModifier(AccessModifiers.None)
+                .WithType(typeof(int)).WithName($"Property_{i}").WithAttributes()
+                .WithGetAccessSpecifier(AccessSpecifier.None).AutoGet()
+                .WithSetAccessSpecifier(AccessSpecifier.None).AutoSet()
+                .WithNoValue());
+        }
+
+        private static IEnumerable<IField> FieldSequenceGenerator(Func<IField> value)
+        {
+            return Enumerable.Range(0, 101).Select(i => value.Invoke().Begin()
+                .WithAccessSpecifier(AccessSpecifier.Private)
+                .WithAccessModifier(AccessModifiers.Readonly)
+                .WithType(typeof(int)).WithName($"_field_{i}")
+                .WithAttributes()
+                .WithValue(i));
+        }
+
+        private static void TestAll(string path)
+        {
+            new FileBuilder()
+                .DefineFile()
+                    .Begin().WithPath(path).WithName("BasicClass")
+                        .WithClass()
+                            .Begin()
+                                .WithNamespace("first").WithUsingDirectives()
+                                .WithAccessSpecifier(AccessSpecifier.None).WithClassType(ClassType.Standard).WithName("BasicClass").WithAttributes()
+                                .WithGenericArguments().WithGenericArgumentConstraint().WithInheritance()
+                            .End()
                         .End()
                     .End()
                 .End()
@@ -114,71 +217,73 @@ namespace FluentGenerationExecutable
                         .End()
                     .End()
                 .End()
+                .DefineFile()
+                    .Begin().WithPath(path).WithName("IBasicInterface")
+                .WithInterface()
+                        .Begin()
+                            .WithNamespace("first").WithUsingDirectives()
+                            .WithAccessSpecifier(AccessSpecifier.None).WithName("IBasicInterface").WithAttributes()
+                            .WithGenericArguments().WithGenericArgumentConstraint().WithInheritance()
+                            .End()
+                        .End()
+                    .End()
+                .End()
+                .DefineFile()
+                    .Begin().WithPath(path).WithName("IAdvancedInterface")
+                    .WithInterface()
+                        .Begin()
+                            .WithNamespace("first.second").WithUsingDirectives()
+                            .WithAccessSpecifier(AccessSpecifier.Public).WithName("IAdvancedInterface").WithAttributes(@"[System.Obsolete(""use something else"")]")
+                            .WithGenericArguments(
+                                new GenericArgument { Name = "T1" },
+                                new GenericArgument { Name = "T2", Type = GenericArgumentType.Covariant },
+                                new GenericArgument { Name = "T3", Type = GenericArgumentType.Contravariant })
+                            .WithGenericArgumentConstraint(
+                                new GenericArgumentConstraint { GenericArgumentName = "T1", Constraints = new[] { typeof(IComparable) } },
+                                new GenericArgumentConstraint { GenericArgumentName = "T2", Constraints = new[] { typeof(IComparable) } })
+                            .WithInheritance("IEnumerable<T1>")
+                            .End()
+                        .End()
+                    .End()
+                .End()
+                .DefineFile()
+                    .Begin().WithPath(path).WithName("IFullInterface")
+                    .WithInterface()
+                        .Begin()
+                            .WithNamespace("first.second.third").WithUsingDirectives()
+                            .WithAccessSpecifier(AccessSpecifier.Public).WithName("IFullInterface").WithAttributes()
+                            .WithGenericArguments(new GenericArgument { Name = "T1" }).WithGenericArgumentConstraint().WithInheritance()
+                            .WithMethod()
+                                .Begin()
+                                    .WithAccessSpecifier(AccessSpecifier.None).WithAccessModifier(AccessModifiers.None)
+                                    .WithType(typeof(void)).WithName("VoidMethod").WithAttributes().WithGenericArguments(new GenericArgument { Name = "T" })
+                                    .WithGenericArgumentConstraint().WithParameters().WithEmptyBody()
+                                .End()
+                            .WithMethod()
+                                .Begin()
+                                    .WithAccessSpecifier(AccessSpecifier.None).WithAccessModifier(AccessModifiers.None)
+                                    .WithType(typeof(void)).WithName("VoidMethod2").WithAttributes().WithGenericArguments()
+                                    .WithGenericArgumentConstraint().WithParameters(Parameter.Standard(typeof(int), "intParam")).WithEmptyBody()
+                                .End()
+                            .WithProperty()
+                                .Begin()
+                                    .WithAccessSpecifier(AccessSpecifier.None).WithAccessModifier(AccessModifiers.None)
+                                    .WithType(typeof(string)).WithName("StringProperty").WithAttributes()
+                                    .WithGetAccessSpecifier(AccessSpecifier.None).AutoGet().WithSetAccessSpecifier(AccessSpecifier.None)
+                                    .AutoSet().WithNoValue()
+                                .End()
+                            .WithProperty()
+                                .Begin()
+                                    .WithAccessSpecifier(AccessSpecifier.None).WithAccessModifier(AccessModifiers.None)
+                                    .WithType(typeof(Dictionary<HashSet<int>, List<int>>)).WithName("MapProp").WithAttributes(typeof(RequiredAttribute))
+                                    .WithGetAccessSpecifier(AccessSpecifier.None).AutoGet().WithSetAccessSpecifier(AccessSpecifier.None)
+                                    .NoSet().WithNoValue()
+                                .End()
+                            .End()
+                        .End()
+                    .End()
+                .End()
                 .Build();
-
-            //Console.ReadKey();
-
-            //new FileBuilder()
-            //    .DefineInterface()
-            //        .Begin()
-            //            .WithAccessSpecifier(AccessSpecifier.None).WithName("IBasicInterface").WithAttributes()
-            //            .WithGenericArguments().WithGenericArgumentConstraint().WithInheritance()
-            //        .End()
-            //    .End();
-
-            //Console.ReadKey();
-
-            //new FileBuilder()
-            //    .DefineInterface()
-            //        .Begin()
-            //            .WithAccessSpecifier(AccessSpecifier.Public).WithName("IAdvancedInterface").WithAttributes(@"[System.Obsolete(""use something else"")]")
-            //            .WithGenericArguments(
-            //                new GenericArgument { Name = "T1" },
-            //                new GenericArgument { Name = "T2", Type = GenericArgumentType.Covariant },
-            //                new GenericArgument { Name = "T3", Type = GenericArgumentType.Contravariant })
-            //            .WithGenericArgumentConstraint(
-            //                new GenericArgumentConstraint { GenericArgumentName = "T1", Constraints = new[] { typeof(IComparable) } },
-            //                new GenericArgumentConstraint { GenericArgumentName = "T2", Constraints = new[] { typeof(IComparable) } })
-            //            .WithInheritance("IEnumerable<T1>")
-            //        .End()
-            //    .End();
-
-            //Console.ReadKey();
-
-            //new FileBuilder()
-            //    .DefineInterface()
-            //        .Begin()
-            //            .WithAccessSpecifier(AccessSpecifier.Public).WithName("IFullInterface").WithAttributes()
-            //            .WithGenericArguments(new GenericArgument { Name = "T1" }).WithGenericArgumentConstraint().WithInheritance()
-            //            .WithMethod()
-            //                .Begin()
-            //                    .WithAccessSpecifier(AccessSpecifier.None).WithAccessModifier(AccessModifiers.None)
-            //                    .WithType(typeof(void)).WithName("VoidMethod").WithAttributes().WithGenericArguments(new GenericArgument { Name = "T" })
-            //                    .WithGenericArgumentConstraint().WithParameters().WithEmptyBody()
-            //                .End()
-            //            .WithMethod()
-            //                .Begin()
-            //                    .WithAccessSpecifier(AccessSpecifier.None).WithAccessModifier(AccessModifiers.None)
-            //                    .WithType(typeof(void)).WithName("VoidMethod2").WithAttributes().WithGenericArguments()
-            //                    .WithGenericArgumentConstraint().WithParameters(Parameter.Standard(typeof(int), "intParam")).WithEmptyBody()
-            //                .End()
-            //            .WithProperty()
-            //                .Begin()
-            //                    .WithAccessSpecifier(AccessSpecifier.None).WithAccessModifier(AccessModifiers.None)
-            //                    .WithType(typeof(string)).WithName("StringProperty").WithAttributes()
-            //                    .WithGetAccessSpecifier(AccessSpecifier.None).AutoGet().WithSetAccessSpecifier(AccessSpecifier.None)
-            //                    .AutoSet().WithNoValue()
-            //                .End()
-            //            .WithProperty()
-            //                .Begin()
-            //                    .WithAccessSpecifier(AccessSpecifier.None).WithAccessModifier(AccessModifiers.None)
-            //                    .WithType(typeof(Dictionary<HashSet<int>, List<int>>)).WithName("MapProp").WithAttributes(typeof(RequiredAttribute))
-            //                    .WithGetAccessSpecifier(AccessSpecifier.None).AutoGet().WithSetAccessSpecifier(AccessSpecifier.None)
-            //                    .NoSet().WithNoValue()
-            //                .End()
-            //        .End()
-            //    .End();
-            //Console.ReadKey();
         }
     }
 }

@@ -33,7 +33,7 @@
         public static string InterfacePattern { get; set; } = @"
 {[IInterfaceNamespace]}
 {
-{[IClassUsingDirectives]}
+{[IInterfaceUsingDirectives]}
 {[IInterfaceAttribute]
 }{[IInterfaceAccessSpecifier]} interface {[IInterfaceName]}{<[IInterfaceGenericArguments]>} {: [IInterfaceInheritance]} {
     [IInterfaceGenericArgumentsConstraints]}

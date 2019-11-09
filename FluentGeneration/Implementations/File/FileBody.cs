@@ -10,19 +10,20 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace FluentGeneration.Implementations.File
 {
-    public class FileBody : IFileBody
+    public class FileBody : BaseBody<IFileBody, IFile>, IFileBody
     {
-        private readonly IFactory<IFluentLink<IFileBody>> _factory;
+        IGenerator IGeneratedObject.Generator => base.Generator;
 
-        public IGenerator Generator { get; }
         public string Data { get; private set; }
 
         public Func<IFile> Source { get; set; }
 
+        protected override Func<IFileBody> GetSource => () => this;
+
+
         public FileBody(IGenerator generator, IFactory<IFluentLink<IFileBody>> factory)
+            : base(generator, factory)
         {
-            Generator = generator ?? throw new ArgumentNullException(nameof(generator));
-            _factory = factory ?? throw new ArgumentNullException(nameof(factory));
         }
 
         public IFile End()
@@ -34,21 +35,7 @@ namespace FluentGeneration.Implementations.File
             return Source.Invoke();
         }
 
-        public IInterface WithInterface()
-        {
-            return WithObject<IInterface>();
-        }
-
-        public IClass WithClass()
-        {
-            return WithObject<IClass>();
-        }
-
-        public TObject WithObject<TObject>()
-        {
-            var instance = _factory.Create(typeof(TObject));
-            instance.Source = () => this;
-            return (TObject)instance;
-        }
+        public IInterface WithInterface() => WithObject<IInterface>();
+        public IClass WithClass() => WithObject<IClass>();
     }
 }

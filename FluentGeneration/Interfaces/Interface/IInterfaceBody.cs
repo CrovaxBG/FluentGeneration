@@ -8,5 +8,8 @@ namespace FluentGeneration.Interfaces.Interface
     {
         IProperty<IInterfaceBody> WithProperty();
         IMethod<IInterfaceBody> WithMethod();
+
+        IInterfaceBody WithProperties(SequenceGenerator<IProperty<IInterfaceBody>> sequenceGenerator);
+        IInterfaceBody WithMethods(SequenceGenerator<IMethod<IInterfaceBody>> sequenceGenerator);
     }
 }

@@ -30,7 +30,6 @@ namespace FluentGeneration.Implementations.Property
         {
             Data = Generator.Generate(PatternConfig.PropertyPattern);
             Source.Invoke().Generator.AddGenerationData(typeof(IProperty<>), Data);
-            Console.WriteLine(Data);
             return Source.Invoke();
         }
     }

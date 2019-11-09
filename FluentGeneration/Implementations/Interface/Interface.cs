@@ -24,8 +24,6 @@ namespace FluentGeneration.Implementations.Interface
         public IFileBody End()
         {
             Data = Generator.Generate(PatternConfig.InterfacePattern);
-            Console.Clear();
-            Console.WriteLine(Data);
             Source.Invoke().Generator.AddGenerationData(typeof(IInterface), Data);
             return Source.Invoke();
         }
