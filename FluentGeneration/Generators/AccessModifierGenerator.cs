@@ -19,10 +19,10 @@ namespace FluentGeneration.Generators
             };
 
 
-        public string Generate(GenerationData data)
+        public string Generate(object data)
         {
             if(data == null) { throw new ArgumentNullException(nameof(data)); }
-            if (!(data.Data is AccessModifiers modifiers)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!");}
+            if (!(data is AccessModifiers modifiers)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!");}
 
             var accessModifiers = modifiers.ToString().Replace(",", string.Empty)
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries);

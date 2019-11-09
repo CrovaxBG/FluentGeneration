@@ -122,3 +122,4 @@ D:\Projects\Libraries\FluentGeneration\FluentGeneration.Tests\obj\Debug\netcorea
 D:\Projects\Libraries\FluentGeneration\FluentGeneration.Tests\obj\Debug\netcoreapp3.0\FluentGeneration.Tests.csproj.CopyComplete
 D:\Projects\Libraries\FluentGeneration\FluentGeneration.Tests\obj\Debug\netcoreapp3.0\FluentGeneration.Tests.dll
 D:\Projects\Libraries\FluentGeneration\FluentGeneration.Tests\obj\Debug\netcoreapp3.0\FluentGeneration.Tests.pdb
+D:\Projects\Libraries\FluentGeneration\FluentGeneration.Tests\bin\Debug\netcoreapp3.0\UsingDirectives.xml

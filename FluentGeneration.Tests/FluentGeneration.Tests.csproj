@@ -16,14 +16,4 @@
     <ProjectReference Include="..\FluentGeneration\FluentGeneration.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="FluentGeneration">
-      <HintPath>..\FluentGeneration\bin\Release\netcoreapp3.0\FluentGeneration.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="GeneratorsTests\" />
-  </ItemGroup>
-
 </Project>

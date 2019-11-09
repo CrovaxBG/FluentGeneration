@@ -11,10 +11,11 @@ namespace FluentGeneration.Generators
     public class UsingDirectivesGenerator : IGeneratableHandler
     {
         private const string UsingDirectivesFileName = @"UsingDirectives.xml";
-        public string Generate(GenerationData data)
+
+        public string Generate(object data)
         {
             if (data == null) { throw new ArgumentNullException(nameof(data)); }
-            if (!(data.Data is string[] directives)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!"); }
+            if (!(data is string[] directives)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!"); }
 
             if (!directives.Any())
             {

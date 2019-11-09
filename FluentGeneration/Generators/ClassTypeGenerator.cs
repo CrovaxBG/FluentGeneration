@@ -15,10 +15,10 @@ namespace FluentGeneration.Generators
                 [ClassType.Sealed] = "sealed",
             };
 
-        public string Generate(GenerationData data)
+        public string Generate(object data)
         {
             if (data == null) { throw new ArgumentNullException(nameof(data)); }
-            if (!(data.Data is ClassType classType)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!"); }
+            if (!(data is ClassType classType)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!"); }
 
             return SpecifiersMap[classType];
         }

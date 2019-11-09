@@ -11,8 +11,7 @@
           "FluentGeneration": "1.0.0",
           "Microsoft.NET.Test.Sdk": "16.2.0",
           "NUnit3TestAdapter": "3.13.0",
-          "NUnit": "3.12.0",
-          "FluentGeneration.Reference": "1.0.0.0"
+          "NUnit": "3.12.0"
         },
         "runtime": {
           "FluentGeneration.Tests.dll": {}
@@ -1109,12 +1108,13 @@
           }
         }
       },
-      "FluentGeneration.Reference/1.0.0.0": {
+      "FluentGeneration/1.0.0": {
+        "dependencies": {
+          "Microsoft.CodeAnalysis.CSharp": "3.3.1",
+          "Unity": "5.11.1"
+        },
         "runtime": {
-          "FluentGeneration.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "FluentGeneration.dll": {}
         }
       }
     }
@@ -1678,8 +1678,8 @@
       "path": "unity/5.11.1",
       "hashPath": "unity.5.11.1.nupkg.sha512"
     },
-    "FluentGeneration.Reference/1.0.0.0": {
-      "type": "reference",
+    "FluentGeneration/1.0.0": {
+      "type": "project",
       "serviceable": false,
       "sha512": ""
     }

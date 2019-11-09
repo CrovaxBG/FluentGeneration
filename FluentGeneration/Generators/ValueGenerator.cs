@@ -2,9 +2,9 @@
 {
     public class ValueGenerator : IGeneratableHandler
     {
-        public string Generate(GenerationData data)
+        public string Generate(object data)
         {
-            return data.Data == null ? "null" : data.Data.ToString();
+            return data == null ? "null" : data.ToString();
         }
     }
 }

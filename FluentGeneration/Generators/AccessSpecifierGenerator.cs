@@ -17,10 +17,10 @@ namespace FluentGeneration.Generators
                 [AccessSpecifier.Public] = "public"
             };
 
-        public string Generate(GenerationData data)
+        public string Generate(object data)
         {
             if (data == null) { throw new ArgumentNullException(nameof(data)); }
-            if (!(data.Data is AccessSpecifier specifier)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!"); }
+            if (!(data is AccessSpecifier specifier)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!"); }
 
             return SpecifiersMap[specifier];
         }

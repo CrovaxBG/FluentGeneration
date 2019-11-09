@@ -16,11 +16,11 @@ namespace FluentGeneration.Generators
                 [ParameterModifier.Out] = "out",
             };
 
-        public string Generate(GenerationData data)
+        public string Generate(object data)
         {
             if (data == null) { throw new ArgumentNullException(nameof(data)); }
-            if(data.Data is string literal) { return literal; }
-            if (!(data.Data is IParameter[] parameters)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!"); }
+            if(data is string literal) { return literal; }
+            if (!(data is IParameter[] parameters)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!"); }
 
             if (parameters.Length == 0) { return string.Empty; }
 

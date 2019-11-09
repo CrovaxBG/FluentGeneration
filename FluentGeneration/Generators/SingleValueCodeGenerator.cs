@@ -38,7 +38,7 @@ namespace FluentGeneration.Generators
         private string ReplaceTypeToken(string currentCode, GenerationData data)
         {
             var instance = _factory.Create(data.Type);
-            var generatedCode = instance.Generate(data);
+            var generatedCode = instance.Generate(data.Data);
             var typeToken = $"[{data.Type.FormatTypeName(false)}]";
 
             currentCode = RemoveSection(currentCode, typeToken);
