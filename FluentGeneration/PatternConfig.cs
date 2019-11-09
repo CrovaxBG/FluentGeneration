@@ -8,11 +8,7 @@
 
         public static string PropertyPattern { get; set; } = @"
 {[IPropertyAttribute<>]
-}{[IPropertyAccessSpecifier<>]} {[IPropertyAccessModifier<>]} {[IPropertyType<>]} {[IPropertyName<>]} 
-{
-    { [IGetAccessSpecifier<>]} {[IGetBody<>]}
-    { [ISetAccessSpecifier<>]} {[ISetBody<>]}
-} {= [IPropertyValue<>];}";
+}{[IPropertyAccessSpecifier<>]} {[IPropertyAccessModifier<>]} {[IPropertyType<>]} {[IPropertyName<>]} { { [IGetAccessSpecifier<>]} {[IGetBody<>]} { [ISetAccessSpecifier<>]} {[ISetBody<>]} } {= [IPropertyValue<>];}";
 
         public static string MethodPattern { get; set; } = @"
 {[IMethodAttribute<>]

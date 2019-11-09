@@ -6,7 +6,7 @@ namespace FluentGeneration.Generators
     {
         public string Generate(GenerationData data)
         {
-            if (data == null) { throw new ArgumentNullException(nameof(data)); }
+            if (data == null) { return string.Empty; }
             if (!(data.Data is string name)) { throw new InvalidOperationException($"{nameof(data)} contains invalid data!"); }
 
             return name;

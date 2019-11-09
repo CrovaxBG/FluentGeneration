@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using FluentGeneration;
 using FluentGeneration.Interfaces.Class;
 using FluentGeneration.Interfaces.Field;
@@ -13,7 +12,6 @@ using FluentGeneration.Interfaces.Interface;
 using FluentGeneration.Interfaces.Method;
 using FluentGeneration.Interfaces.Property;
 using FluentGeneration.Shared;
-using Unity;
 
 namespace FluentGenerationExecutable
 {

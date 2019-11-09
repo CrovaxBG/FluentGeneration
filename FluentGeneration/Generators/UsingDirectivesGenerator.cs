@@ -2,7 +2,9 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using FluentGeneration.Shared;
+using System.Xml;
+using System.Xml.Serialization;
+using XmlReader = FluentGeneration.Shared.XmlReader;
 
 namespace FluentGeneration.Generators
 {
@@ -16,12 +18,21 @@ namespace FluentGeneration.Generators
 
             if (!directives.Any())
             {
-                var buildDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var path = $@"{buildDir}\{UsingDirectivesFileName}";
-                directives = XmlReader.Read(path).UsingDirectives;
+                directives = GetDefaultDirectives().UsingDirectives;
             }
 
             return string.Join(Environment.NewLine, directives.Select(d => $"using {d};"));
+        }
+
+        private UsingDirectivesWrapper GetDefaultDirectives()
+        {
+            var xDoc = new XmlDocument();
+            xDoc.Load(Assembly.GetExecutingAssembly().GetManifestResourceStream("FluentGeneration.UsingDirectives.xml"));
+
+            using TextReader sr = new StringReader(xDoc.InnerXml);
+
+            var serializer = new XmlSerializer(typeof(UsingDirectivesWrapper));
+            return (UsingDirectivesWrapper)serializer.Deserialize(sr);
         }
     }
 }

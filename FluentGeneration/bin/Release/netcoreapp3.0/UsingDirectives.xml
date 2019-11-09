@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<UsingDirectivesWrapper>
+  <UsingDirectives>
+    <string>System</string>
+    <string>System.Text</string>
+    <string>System.Linq</string>
+    <string>System.Collections</string>
+    <string>System.Collections.Generic</string>
+  </UsingDirectives>
+</UsingDirectivesWrapper>

@@ -27,8 +27,6 @@ namespace FluentGeneration.Implementations.Method
 
         public IMethodAttribute<T> WithName(string name)
         {
-            if (string.IsNullOrEmpty(name)) { throw new ArgumentNullException(nameof(name)); }
-
             Source.Invoke().Generator.AddGenerationData(typeof(IMethodName<>), name);
             return _methodAttribute;
         }
