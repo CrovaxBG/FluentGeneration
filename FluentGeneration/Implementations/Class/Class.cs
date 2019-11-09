@@ -7,37 +7,32 @@ namespace FluentGeneration.Implementations.Class
 {
     public class Class : IClass
     {
-        private readonly IClassAccessSpecifier _accessSpecifier;
+        private readonly IClassNamespace _namespace;
 
         public IGenerator Generator { get; }
         public string Data { get; private set; }
 
-        public Func<IFile> Source { get; set; }
+        public Func<IFileBody> Source { get; set; }
 
-        public Class(IGenerator codeGenerator, IClassAccessSpecifier accessSpecifier)
+        public Class(IGenerator codeGenerator, IClassNamespace @namespace)
         {
             Generator = codeGenerator ?? throw new ArgumentNullException(nameof(codeGenerator));
-            _accessSpecifier = accessSpecifier ?? throw new ArgumentNullException(nameof(accessSpecifier));
-            _accessSpecifier.Source = () => this;
+            _namespace = @namespace ?? throw new ArgumentNullException(nameof(@namespace));
+            _namespace.Source = () => this;
         }
 
-        public IFile End()
+        public IFileBody End()
         {
             Data = Generator.Generate(PatternConfig.ClassPattern);
             Console.Clear();
             Console.WriteLine(Data);
-            if (Source == null)
-            {
-                //TODO Build file with class
-                return null;
-            }
             Source.Invoke().Generator.AddGenerationData(typeof(IClass), Data);
             return Source.Invoke();
         }
 
-        public IClassAccessSpecifier Begin()
+        public IClassNamespace Begin()
         {
-            return _accessSpecifier;
+            return _namespace;
         }
     }
 }

@@ -3,8 +3,8 @@ using FluentGeneration.Shared;
 
 namespace FluentGeneration.Interfaces.Class
 {
-    public interface IClass : IGeneratedObject, IFluentLink<IFile>, IEndable<IFile>,
-        IBeginable<IClassAccessSpecifier>
+    public interface IClass : IGeneratedObject, IFluentLink<IFileBody>, IEndable<IFileBody>,
+        IBeginable<IClassNamespace>
     {
 
     }

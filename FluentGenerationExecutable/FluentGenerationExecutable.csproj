@@ -9,4 +9,8 @@
     <ProjectReference Include="..\FluentGeneration\FluentGeneration.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TestFiles\" />
+  </ItemGroup>
+
 </Project>

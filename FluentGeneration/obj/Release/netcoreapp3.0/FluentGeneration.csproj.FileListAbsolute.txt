@@ -5,3 +5,4 @@ D:\Projects\Libraries\FluentGeneration\FluentGeneration\obj\Release\netcoreapp3.
 D:\Projects\Libraries\FluentGeneration\FluentGeneration\obj\Release\netcoreapp3.0\FluentGeneration.AssemblyInfo.cs
 D:\Projects\Libraries\FluentGeneration\FluentGeneration\obj\Release\netcoreapp3.0\FluentGeneration.dll
 D:\Projects\Libraries\FluentGeneration\FluentGeneration\obj\Release\netcoreapp3.0\FluentGeneration.pdb
+D:\Projects\Libraries\FluentGeneration\FluentGeneration\obj\Release\netcoreapp3.0\FluentGeneration.csprojAssemblyReference.cache

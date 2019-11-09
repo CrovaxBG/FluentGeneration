@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FluentGeneration.Shared;
+﻿using FluentGeneration.Shared;
 
 namespace FluentGeneration.Interfaces.File
 {
-    public interface IFile : IGeneratedObject
+    public interface IFile : IFluentLink<FileBuilder>, IBeginable<IFilePath>, IEndable<FileBuilder>
     {
-        //TODO
+        string Path { get; set; }
+        string Name { get; set; }
+        string Body { get; set; }
     }
 }
