@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using FluentGeneration.Generators;
 using NUnit.Framework;
 
@@ -8,6 +7,15 @@ namespace FluentGeneration.Tests.GeneratorsTests
     [TestFixture]
     public class AttributeGeneratorTests
     {
+        [Test]
+        public void EmptyDataTest()
+        {
+            var generator = new AttributeGenerator();
+            var result = generator.Generate(new Type[0]);
+
+            Assert.AreEqual("", result);
+        }
+
         [Test]
         public void SingleAttributeTypeDataTest()
         {

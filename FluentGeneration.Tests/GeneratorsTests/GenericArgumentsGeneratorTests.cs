@@ -9,6 +9,15 @@ namespace FluentGeneration.Tests.GeneratorsTests
     public class GenericArgumentsGeneratorTests
     {
         [Test]
+        public void EmptyDataTest()
+        {
+            var generator = new GenericArgumentsGenerator();
+            var result = generator.Generate(new IGenericArgument[0]);
+
+            Assert.AreEqual("", result);
+        }
+
+        [Test]
         public void MultipleArgumentsTest()
         {
             var generator = new GenericArgumentsGenerator();

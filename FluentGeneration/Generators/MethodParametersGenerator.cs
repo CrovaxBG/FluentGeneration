@@ -30,7 +30,7 @@ namespace FluentGeneration.Generators
         private string Convert(IParameter parameter)
         {
             var attributes = string.Join(string.Empty,
-                parameter.ParameterAttributes.Select(att => att.FormatTypeName()));
+                parameter.ParameterAttributes.Select(att => $"[{att.FormatTypeName()}]"));
             var modifier = ModifierMap[parameter.ParameterModifier];
             var type = parameter.ParameterType.FormatTypeName();
             var name = parameter.ParameterName;

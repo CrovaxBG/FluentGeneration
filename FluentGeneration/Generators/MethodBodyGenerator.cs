@@ -12,10 +12,7 @@ namespace FluentGeneration.Generators
 
             if (bodyData.IsAuto) { return ";"; }
 
-            return $@"
-{{
-    {bodyData.Body}
-}}";
+            return $@"{{ {bodyData.Body} }}";
         }
     }
 }
