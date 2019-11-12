@@ -12,6 +12,7 @@ namespace FluentGeneration.Tests.GeneratorsTests
         [TestCase(ClassType.Static, ExpectedResult = "static")]
         [TestCase(ClassType.Abstract, ExpectedResult = "abstract")]
         [TestCase(ClassType.Sealed, ExpectedResult = "sealed")]
+        [TestCase(ClassType.Partial, ExpectedResult = "partial")]
         public string AccessSpecifierConvertTest(ClassType classType)
         {
             var generator = new ClassTypeGenerator();

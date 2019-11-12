@@ -13,6 +13,7 @@ namespace FluentGeneration.Generators
                 [ClassType.Static] = "static",
                 [ClassType.Abstract] = "abstract",
                 [ClassType.Sealed] = "sealed",
+                [ClassType.Partial] = "partial",
             };
 
         public string Generate(object data)

@@ -5,6 +5,7 @@
         Standard,
         Static,
         Abstract,
-        Sealed
+        Sealed,
+        Partial
     }
 }
